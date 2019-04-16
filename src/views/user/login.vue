@@ -19,7 +19,14 @@
 			clickMode="push"
 		>
 		</vue-particles>
-
+		<div class="form">
+			<div class="form-item"></div>
+		</div>
+		<div class="footer">
+			@yangdongnan
+			<a href="https://blog.csdn.net/weixin_38644883">Csdn</a>
+			<a href="https://blog.csdn.net/weixin_38644883">Github</a>
+		</div>
 	</div>
 </template>
 <style scoped lang="less">

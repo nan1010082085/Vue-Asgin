@@ -26,7 +26,7 @@ const router = new Router({
 		},
 		{
 			path:'*',
-			redirect: '/login'
+			redirect: 'login'
 		}
 	]
 })
@@ -41,7 +41,7 @@ console.log(router)
 router.beforeEach((to, from, next)=>{
 	console.log('route before')
 	next()
-                                                                                })
+})
 router.afterEach((to, from)=>{
 	console.log('route after')
 })
