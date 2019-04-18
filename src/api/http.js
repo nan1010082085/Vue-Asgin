@@ -6,11 +6,17 @@ function token () {
 	var accessToken = isLocalStorageSupported()&&window.localStorage.getItem('token') ? window.localStorage.getItem('token') : '';
 	return accessToken
 }
-
-axios.default.timeout = 30000
-axios.default.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencoded;charset=UTF-8';
-
-function requestIntercept() {
+axios.defaults.timeout = 30000
+axios.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencoded;charset=UTF-8';
+// 账户验证
+// axios.defaults.auth = {
+//	 username: 'janedoe',
+//   password: 's00pers3cret'
+// }
+/**
+ * ajax 拦截器
+ */
+(function () {
 	// axios.defaults.withCredentials = true;  //是否验证 开启后 后台 * 跨域失效
 	axios.interceptors.request.use(function (request) {
 		return request;
@@ -29,13 +35,16 @@ function requestIntercept() {
 			}
 		}
 	});
-}
-
-requestIntercept();
-
+})()
+/*
+* get 请求
+* */
 function get (url, params) {
-	var timesamp = new Date().getTime();
-	
+	let timesamp = new Date().getTime();
+	//请求中加入token
+	if(token() != ''){
+		// axios.defaults.headers.Authorization  = 'Bearer ' + token();
+	}
 	if(typeof params == 'object'){
 		params['timestamp'] = timesamp
 	}else {
@@ -43,22 +52,22 @@ function get (url, params) {
 			'timesamp': timesamp
 		}
 	}
-	//请求头验证
-	// if(token() != ''){
-	// 	axios.defaults.headers.Authorization  = 'Bearer ' + token();
-	// }
 	
-	return axios.get(url,{
-		params : params,
+	return axios({
+		method:'get',
+		url:url,
+		params:params
 	})
 }
-
-function post (url,params) {
-	var timesamp = new Date().getTime();
-	//请求头验证
-	// if(token() != ''){
-	// 	axios.defaults.headers.Authorization  = 'Bearer ' + token();
-	// }
+/*
+* post 请求
+* */
+function post (url,params,query) {
+	let timesamp = new Date().getTime();
+	//请求中加入token
+	if(token() != ''){
+		// axios.defaults.headers.Authorization  = 'Bearer ' + token();
+	}
 	if(typeof data == 'object'){
 		params['timestamp'] = timesamp
 	}else {
@@ -66,7 +75,12 @@ function post (url,params) {
 			'timesamp': timesamp
 		}
 	}
-	return axios.post(url, params)
+	return axios({
+		method:'post',
+		url:url,
+		data:params,
+		query:query
+	})
 }
 
 export {

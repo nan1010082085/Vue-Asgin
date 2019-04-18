@@ -7,25 +7,75 @@
 	height: 100vh;
 	background:  url("../image/login.jpg")no-repeat center;
 	background-size: 100% 100%;
-	overflow: hidden;
+	overflow: scroll;
+}
+
+.form-warp{
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 777;
+	min-width: 1280px;
+	min-height: 800px;
+	width: 100%;
+	height: 100%;
+	.form-header{
+		padding: 20px 0 20px;
+		h1{
+			font-size: 24px;
+		}
+	}
 }
 
 .form{
 	position: absolute;
+	padding: 0 30px 30px;
 	top: 20%;
 	right: 10%;
-	z-index: 777;
-	width: 600px;
-	height: 400px;
+	width: 500px;
+	height: auto;
 	background-color: #fff;
 	border-radius: 10px;
 	box-sizing: border-box;
-	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)
+	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+
+	.form-login-inp-code{
+		width: 60%;
+		vertical-align: middle;
+	}
+	.code-btn{
+		margin-left: 35px;
+	}
+	.code-btn-img{
+		display: inline-block;
+		margin-left: 35px;
+		width: 100px;
+		height: 40px;
+		/*border: 1px solid #cacaca;*/
+		vertical-align: middle;
+	}
+
+	.form-submit{
+		margin-top: 30px;
+		width: 60%;
+	}
+	.form-reset{
+		margin-left: 35px;
+	}
 }
 
 .footer{
-	position: absolute;
-	bottom: 10%;
-	z-index: 777;
+	position: fixed;
+	bottom: 5%;
+	width: 100%;
+	z-index: 666;
 	color: #ffffff;
+	text-align: center;
+
+	a{
+		margin: 10px auto 0;
+		width: 100px;
+		display: block;
+		color: blue;
+	}
 }

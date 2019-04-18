@@ -47,11 +47,16 @@ module.exports = {
 	productionSourceMap : false,
 	css : {
 		//是否将组件中的 CSS 提取至一个独立的 CSS 文件中 (而不是动态注入到 JavaScript 中的 inline 代码)。
-		extract : process.env.NODE_ENV === 'production' ? false : true,
+		// extract : process.env.NODE_ENV === 'production' ? false : true,
 		// 开启 CSS source maps?
 		sourceMap : false,
 		// css预设器配置项
-		loaderOptions : {},
+		loaderOptions : {
+			less : {
+				test : /\.less$/,
+				loader : "style-loader!css-loader!less-loader"
+			}
+		},
 		// 启用 CSS modules for all css / pre-processor files.
 		modules : false
 	},

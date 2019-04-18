@@ -3,5 +3,12 @@ module.exports = {
     '@vue/app',
   ],
 	plugins:[
+		[
+			"component",
+			{
+				"libraryName": "element-ui",
+				"styleLibraryName": "theme-chalk"
+			}
+		]
 	]
 }

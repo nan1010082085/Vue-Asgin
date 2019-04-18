@@ -1,29 +1,14 @@
 # vue-asgisn
 
-## Project setup
-```
-npm install
-```
+> login
+1. 图形验证码登录
+2. 手机号登录
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+> views
+1. 布局 1 
+2. 布局 2
+3. 实现控制面板 -- 
+    1. 两种布局切换
+    2. 导航颜色切换
+    3. element 主题切换
+4. 实现菜单浮动框
