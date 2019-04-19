@@ -10,8 +10,8 @@ axios.defaults.timeout = 30000
 axios.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencoded;charset=UTF-8';
 // 账户验证
 // axios.defaults.auth = {
-//	 username: 'janedoe',
-//   password: 's00pers3cret'
+//	 username: '',
+//   password: ''
 // }
 /**
  * ajax 拦截器

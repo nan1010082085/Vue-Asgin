@@ -1,15 +1,18 @@
 <template>
-	<div>
-		<!-- 布局 1 -->
-		<Container v-if="false" class="as-views">
-			<Lnav></Lnav>
+	<Container class="as-views">
+		<LNav v-if="pattern == 1" :fixed="fixedNav" :fixed-header="fixedHeader"></LNav>
 
-			<div class="as-views-container">
-				<Header class="as-header">
-					<Button class="" icon="el-icon-setting">1</Button>
-				</Header>
+		<Container class="as-views-container"
+							 :class="[
+							 			{'as-views-container-header-fixed' : fixedHeader},
+							 			{'as-views-container-fixed-nav' : fixedNav && pattern == 1}
+							 ]">
+			<LHeader></LHeader>
 
-				<Main>
+			<div :class="[
+				'main-default plr10',
+				{'main-justify' : pattern == 2 || mainJustify}
+			]">
 					<Table :data="tableData">
 						<TableColumn prop="date" label="日期" width="140">
 						</TableColumn>
@@ -18,78 +21,34 @@
 						<TableColumn prop="address" label="地址">
 						</TableColumn>
 					</Table>
-				</Main>
+				<!--<router-view/>-->
 			</div>
 		</Container>
-		<!-- 布局 2 -->
-		<div class="as-views">
-			<Header class="as-header">
-				<div class="as-header-left">平台</div>
-				<div class="as-header-center">1111</div>
-				<Button class="setting" type="text" icon="el-icon-setting"></Button>
-			</Header>
-
-			<Container class="as-views-container2">
-				<Lnav></Lnav>
-				<Main>
-					<Table :data="tableData">
-						<TableColumn prop="date" label="日期" width="140">
-						</TableColumn>
-						<TableColumn prop="name" label="姓名" width="120">
-						</TableColumn>
-						<TableColumn prop="address" label="地址">
-						</TableColumn>
-					</Table>
-				</Main>
-			</Container>
-		</div>
-	</div>
+	</Container>
 </template>
 <style scoped lang="less">
 	@import "../assets/css/style";
-	.as-views{
-		width: 100%;
-		height: 100%;
-	}
-	//header
-	.as-header{
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
-		height: 50px!important;
-		font-size: @as-default-fz;
-		background-color: #B3C0D1;
-		color: #333;
-		line-height: 50px!important;
-
-		.as-header-left{
-			width: 25%;
-			text-align: left;
-		}
-		.as-header-center{
-			width: 70%;
-			text-align: right;
-		}
-		.setting{
-			color: #fff;
-		}
-	}
-
+	.as-views{}
 	.as-views-container{
-
+		min-height: 100vh;
+		flex-wrap: wrap;
 	}
-
-	.as-views-container2{
-		height: calc(100% - 50px);
+	.main-default{
+		width: 100%;
 	}
-
+	.main-justify{
+		margin: auto;
+		width: 1200px;
+	}
 </style>
 <script>
-	import Lnav from '../components/l-nav'
+	import LHeader from '../components/l-header'
+	import LNav from '../components/l-nav'
+	import {mapState, mapMutations} from 'vuex'
 	export default {
-		components: {Lnav},
+		components: {LHeader,LNav},
 		mixins: [],
-		name: '',
+		name: 'views',
 		data () {
 
 			const item = {
@@ -102,11 +61,23 @@
 			}
 		},
 		props: {},
-		computed: {},
+		computed: {
+			...mapState({
+				pattern : state => state.layout.pattern,
+				fixedNav: state => state.layout.fixedNav,
+				fixedHeader: state => state.layout.fixedHeader,
+				mainJustify: state => state.layout.mainJustify
+			})
+		},
 		watch: {},
 		created () {},
-		mounted () {},
-		methods: {},
+		mounted () {
+		},
+		methods: {
+			...mapMutations([
+				'setPattern'
+			])
+		},
 		filters: {},
 		directives: {},
 		//keep-alive
@@ -122,6 +93,6 @@
 		destroyed () {}
 		//route leave
 		//beforeRouteLeave ( to, from, next ) {
-		//} 
+		//}
 	}
 </script>

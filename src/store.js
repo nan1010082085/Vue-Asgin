@@ -7,6 +7,8 @@ import actions from './store/actions'
 import gutters from './store/gutters'
 import mutations from './store/mutations'
 
+//模式
+import layout from './store/layout'
 
 Vue.use(Vuex)
 
@@ -15,6 +17,8 @@ export default new Vuex.Store({
   mutations: actions,
   actions: mutations,
 	getters: gutters,
-	modules:{},
+	modules:{
+		layout
+	},
 	plugins:[],
 })

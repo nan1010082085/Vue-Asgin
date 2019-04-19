@@ -8,7 +8,7 @@
 ::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
 	border-radius: 10px;
 	-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
-	background: #c1c1c1;
+	background: #B3C0D1;
 }
 ::-webkit-scrollbar-track {/*滚动条里面轨道*/
 	-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
@@ -86,8 +86,63 @@
 	text-align: center;
 }
 .tar{
-	text-align: right;
+	text-align: right!important;
+}
+/* clearfix */
+
+.clearfix:before,
+.clearfix:after{
+	display: block;
+	content: '';
+	clear: both;
 }
 
-
 /* transition */
+.fade-enter-active, .fade-leave-active {
+	transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to{
+	opacity: 0;
+}
+
+/* views */
+//固定导航模式
+.nav-fixed{
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+.nav-fixed-header{
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	width: 200px;
+	height: 100%;
+}
+.nav-fixed-aside-header{
+	margin-top: 60px;
+}
+//固定顶部
+.header-fixed{
+	position: fixed;
+	top: 0;
+	left: 200px;
+	min-width: calc(100% - 200px);
+	z-index: 10;
+}
+.as-views-container-header-fixed{
+	padding-top: 60px;
+}
+.as-views-container-fixed-nav{
+	padding-left: 200px;
+}
+
+/* element */
+.el-submenu__title i{
+	color: #ffffff;
+}
