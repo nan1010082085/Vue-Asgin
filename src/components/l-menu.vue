@@ -1,12 +1,12 @@
 <template>
 	<div class="l-menu">
 		<div v-if="isShowMenu">
-			<Menu style="width: 100%;"
-				    :text-color="$store.state.layout.navStyle.textColor"
-						:active-text-color="$store.state.layout.navStyle.activeTextColor"
-						:background-color="$store.state.layout.navStyle.backgroundColor"
-						:style="{'background-color' : $store.state.layout.navStyle.backgroundColor}"
-						:mode="$store.state.layout.pattern == 2 ? 'horizontal' : 'vertical'">
+			<Menu
+				    :text-color="navStyle.textColor"
+						:active-text-color="navStyle.activeTextColor"
+						:background-color="navStyle.backgroundColor"
+						:style="{'background-color' : navStyle.backgroundColor}"
+						:mode="pattern == 2 ? 'horizontal' : 'vertical'">
 				<Submenu index="1">
 					<template slot="title"><i class="el-icon-message"></i>导航一</template>
 					<MenuItemGroup>
@@ -71,6 +71,7 @@
 	}
 </style>
 <script>
+	import {mapState} from 'vuex'
 	export default {
 		components: {},
 		mixins: [],
@@ -85,7 +86,12 @@
 				default:true,
 			},
 		},
-		computed: {},
+		computed: {
+      ...mapState({
+        pattern : state => state.layout.pattern,
+        navStyle: state => state.layout.navStyle,
+      })
+		},
 		watch: {},
 		created () {},
 		mounted () {},

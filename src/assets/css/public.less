@@ -106,12 +106,12 @@
 }
 
 /* views */
-//固定导航模式
+//固定导航模式 层级大于header
 .nav-fixed{
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 10;
+	z-index: 11;
 	height: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -120,8 +120,8 @@
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 10;
-	width: 200px;
+	z-index: 11;
+	width: inherit;
 	height: 100%;
 }
 .nav-fixed-aside-header{
@@ -129,12 +129,23 @@
 }
 //固定顶部
 .header-fixed{
-	position: fixed;
+	position: fixed!important;
 	top: 0;
-	left: 200px;
-	min-width: calc(100% - 200px);
+	left: 0;
 	z-index: 10;
 }
+//侧边顶部宽度
+.header-width {
+	width: 100%;
+}
+//顶部宽度
+.header-top-width{
+	width: calc(100% - 50px);
+}
+.header-fixed-min-width{
+	width: 100%;
+}
+
 .as-views-container-header-fixed{
 	padding-top: 60px;
 }

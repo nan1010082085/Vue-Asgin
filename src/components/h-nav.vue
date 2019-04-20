@@ -1,14 +1,14 @@
 <template>
-	<div class="nav" :style="{'background-color' : $store.state.layout.backgroundColor}">
+	<div class="nav" :style="{'background-color' : navStyle.backgroundColor}">
 		<div class="h-nav-header"
 				 :style="{
-				 	'background-color' : $store.state.layout.backgroundColor,
-				 	'color': $store.state.layout.textColor
+				 	'background-color' : navStyle.backgroundColor,
+				 	'color': navStyle.textColor
 				 }"
-				 :class="[{'nav-fixed-header': $store.state.layout.fixedHeader,'tar': isNavHeaderTar}]">
+				 :class="[{'nav-fixed-header': fixedHeader,'tar': isNavHeaderTar}]">
 			Vue Asgin
 		</div>
-		<div class="h-nav-menu" :style="{'background-color' : $store.state.layout.backgroundColor}">
+		<div class="h-nav-menu" :style="{'background-color' : navStyle.backgroundColor}">
 			<LMenu :visable="isShowClickMenu" :is-show-menu="isShowMenu"></LMenu>
 			<LHeaderContent :is-show-search="isShowSearch"></LHeaderContent>
 		</div>
@@ -17,7 +17,7 @@
 <style scoped lang="less">
 	@import "../assets/css/style";
 	.nav{
-		width: 100%;
+		width: inherit;
 		display: flex;
 		flex-direction: row;
 	}
@@ -25,7 +25,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
-		width: calc(100% - 200px);
+		width: inherit;
 		height: 60px;
 		text-align: right;
 	}
@@ -40,6 +40,7 @@
 <script>
 	import LMenu from './l-menu'
 	import LHeaderContent from './l-hedaer-content'
+	import {mapState} from 'vuex'
 	export default {
 		components: {LMenu,LHeaderContent},
 		mixins: [],
@@ -55,6 +56,11 @@
 			isShowClickMenu: Boolean,
 		},
 		computed: {
+      ...mapState({
+        pattern: state => state.layout.pattern,
+        fixedHeader: state => state.layout.fixedHeader,
+        navStyle: state => state.layout.navStyle
+      }),
 			isNavHeaderTar(){
 				return this.isShowClickMenu && !this.isShowMenu || !this.isShowClickMenu && !this.isShowMenu
 			},

@@ -1,7 +1,13 @@
 <template>
 	<div class="header"
 			 :style="{'background-color' : navStyle.backgroundColor}"
-			 :class="[{'header-fixed': fixedHeader}]">
+			 :class="[
+			 {
+			 	'header-fixed': fixedHeader,
+			 	'header-fixed-min-width': pattern == 1 && fixedHeader,
+			 	'header-width': pattern == 1 && !fixedHeader || pattern == 2
+			 }
+			 ]">
 		<Header class="as-header"
 						:style="{'color' : navStyle.textColor}"
 						v-if="pattern == '1'">
@@ -12,6 +18,7 @@
 
 		<div v-else
 				 class="as-pattern-header"
+				 :class="{'header-top-width': pattern == 2}"
 				 :style="{'color' : navStyle.textColor}">
 			<HNav :is-show-menu="isShowMenu"
 						:is-show-search="isShowSearch"
@@ -45,7 +52,6 @@
 		position: relative;
 		display: flex;
 		flex-direction: row;
-		width: 100%;
 		height: 60px;
 	}
 
@@ -67,19 +73,23 @@
 
 	//pattern 2
 	.as-pattern-header {
-		width: calc(100% - 50px);
+		width: inherit;
 		font-size: @as-default-fz;
 		line-height: 60px;
 	}
 
 	.setting {
+		/*position: absolute;*/
+		/*right: 0;*/
 		width: 50px;
+		/*z-index: 11;*/
 	}
 
 	.show-menu {
 		position: absolute;
 		left: 5px;
 		top: 25px;
+		z-index: 11;
 	}
 </style>
 <script>
@@ -102,6 +112,7 @@
 		computed: {
 			...mapState({
 				pattern: state => state.layout.pattern,
+        fixedNav: state => state.layout.fixedNav,
 				fixedHeader: state => state.layout.fixedHeader,
 				navStyle: state => state.layout.navStyle
 			}),

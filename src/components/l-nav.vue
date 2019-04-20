@@ -1,18 +1,18 @@
 <template>
 	<div class="nav"
 			 :style="{
-			 'background-color':$store.state.layout.navStyle.backgroundColor
+			 'background-color':navStyle.backgroundColor
 			 }"
 			 :class="[
-			 	 {'nav-fixed': $store.state.layout.fixedNav, 'nav-fixed-aside-header': $store.state.layout.fixedHeader}
+			 	 {'nav-fixed': fixedNav, 'nav-fixed-aside-header': fixedHeader}
 			 ]">
-		<Aside width="200px">
+		<Aside style="width: inherit;">
 			<div class="nav-header"
 					 :style="{
-					 'background-color':$store.state.layout.navStyle.backgroundColor,
-					 'color':$store.state.layout.navStyle.textColor
+					 'background-color':navStyle.backgroundColor,
+					 'color':navStyle.textColor
 					 }"
-					 :class="[{'nav-fixed-header': $store.state.layout.fixedHeader}]">
+					 :class="[{'nav-fixed-header': fixedHeader}]">
 				Vue Asgin
 			</div>
 			<LMenu :is-show-menu="isShowMenu"></LMenu>
@@ -36,6 +36,7 @@
 </style>
 <script>
 	import LMenu from './l-menu'
+	import {mapState} from 'vuex'
 	export default {
 		components: {LMenu},
 		mixins: [],
@@ -46,7 +47,13 @@
 			}
 		},
 		props: {},
-		computed: {},
+		computed: {
+      ...mapState({
+        fixedNav : state => state.layout.fixedNav,
+        fixedHeader : state => state.layout.fixedHeader,
+        navStyle: state => state.layout.navStyle,
+      })
+		},
 		watch: {},
 		created () {},
 		mounted () {},

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState  from 'vuex-persistedstate'
 
 //全局
 import state from './store/state'
@@ -20,5 +21,7 @@ export default new Vuex.Store({
 	modules:{
 		layout
 	},
-	plugins:[],
+	plugins:[
+    createPersistedState({ storage: window.localStorage })
+  ],
 })

@@ -5,7 +5,7 @@ import * as theme from '../assets/theme'
 // })
 
 const state = {
-	pattern: '2',  //1 侧边导航模式  2 顶部导航模式
+	pattern: '1',  //1 侧边导航模式  2 顶部导航模式
 	fixedNav: false,  //是否固定导航
 	fixedHeader: false, //固定头部
 	//main  两边留白布局
@@ -29,8 +29,11 @@ const mutations = {
 
 const actions = {}
 
+const gutters = {}
+
 export default {
 	state,
 	mutations,
-	actions
+	actions,
+  gutters
 }

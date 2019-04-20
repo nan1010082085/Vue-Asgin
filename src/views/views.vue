@@ -1,6 +1,6 @@
 <template>
 	<Container class="as-views">
-		<LNav v-if="pattern == 1" :fixed="fixedNav" :fixed-header="fixedHeader" :nav-style="navStyle"></LNav>
+		<LNav v-if="pattern == 1"></LNav>
 
 		<Container class="as-views-container"
 							 :class="[
@@ -13,7 +13,9 @@
 				'main-default plr10',
 				{'main-justify' : pattern == 2 || mainJustify}
 			]">
-					<Table :data="tableData">
+					<Table :data="tableData" highlight-current-row>
+						<TableColumn type="index" width="50">
+						</TableColumn>
 						<TableColumn prop="date" label="日期" width="140">
 						</TableColumn>
 						<TableColumn prop="name" label="姓名" width="120">
@@ -25,7 +27,6 @@
 			</div>
 			<!-- 控制面板 -->
 			<Control :visible.sync="showControl"
-							 :nav-style="navStyle"
 							 @close="handleHideControl"
 							 @layout="handleVuexLayout"></Control>
 		</Container>
