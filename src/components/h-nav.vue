@@ -1,15 +1,15 @@
 <template>
-	<div class="nav" :style="{'background-color' : navStyle.backgroundColor}">
+	<div class="nav" :style="{'background-color' : $store.state.layout.backgroundColor}">
 		<div class="h-nav-header"
 				 :style="{
-				 	'background-color' : navStyle.backgroundColor,
-				 	'color': navStyle.textColor
+				 	'background-color' : $store.state.layout.backgroundColor,
+				 	'color': $store.state.layout.textColor
 				 }"
-				 :class="[{'nav-fixed-header': fixedHeader,'tar': isNavHeaderTar}]">
+				 :class="[{'nav-fixed-header': $store.state.layout.fixedHeader,'tar': isNavHeaderTar}]">
 			Vue Asgin
 		</div>
-		<div class="h-nav-menu" :style="{'background-color' : navStyle.backgroundColor}">
-			<LMenu :pattern="pattern" :visable="isShowClickMenu" :is-show-menu="isShowMenu" :nav-style="navStyle"></LMenu>
+		<div class="h-nav-menu" :style="{'background-color' : $store.state.layout.backgroundColor}">
+			<LMenu :visable="isShowClickMenu" :is-show-menu="isShowMenu"></LMenu>
 			<LHeaderContent :is-show-search="isShowSearch"></LHeaderContent>
 		</div>
 	</div>
@@ -50,12 +50,9 @@
 			}
 		},
 		props: {
-			pattern:String,
-			fixedHeader:String,
 			isShowSearch:Boolean,
 			isShowMenu:Boolean,
 			isShowClickMenu: Boolean,
-			navStyle:Object
 		},
 		computed: {
 			isNavHeaderTar(){

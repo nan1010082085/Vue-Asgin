@@ -1,21 +1,21 @@
 <template>
 	<div class="nav"
 			 :style="{
-			 'background-color':navStyle.backgroundColor
+			 'background-color':$store.state.layout.navStyle.backgroundColor
 			 }"
 			 :class="[
-			 	 {'nav-fixed': fixed, 'nav-fixed-aside-header': fixedHeader}
+			 	 {'nav-fixed': $store.state.layout.fixedNav, 'nav-fixed-aside-header': $store.state.layout.fixedHeader}
 			 ]">
 		<Aside width="200px">
 			<div class="nav-header"
 					 :style="{
-					 'background-color':navStyle.backgroundColor,
-					 'color':navStyle.textColor
+					 'background-color':$store.state.layout.navStyle.backgroundColor,
+					 'color':$store.state.layout.navStyle.textColor
 					 }"
-					 :class="[{'nav-fixed-header': fixedHeader}]">
+					 :class="[{'nav-fixed-header': $store.state.layout.fixedHeader}]">
 				Vue Asgin
 			</div>
-			<LMenu :pattern="pattern" :is-show-menu="isShowMenu" :nav-style="navStyle"></LMenu>
+			<LMenu :is-show-menu="isShowMenu"></LMenu>
 		</Aside>
 	</div>
 </template>
@@ -36,7 +36,6 @@
 </style>
 <script>
 	import LMenu from './l-menu'
-	import {mapState} from 'vuex'
 	export default {
 		components: {LMenu},
 		mixins: [],
@@ -46,18 +45,8 @@
 				isShowMenu:true
 			}
 		},
-		props: {
-			pattern: String,
-			fixed: Boolean,
-			fixedHeader: Boolean
-		},
-		computed: {
-			...mapState({
-				pattern : state => state.layout.pattern,
-				sidebarBtnShow : state => state.layout.sidebarBtnShow,
-				navStyle : state => state.layout.navStyle
-			})
-		},
+		props: {},
+		computed: {},
 		watch: {},
 		created () {},
 		mounted () {},

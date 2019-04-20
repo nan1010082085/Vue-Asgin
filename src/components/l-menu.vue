@@ -1,11 +1,12 @@
 <template>
 	<div class="l-menu">
 		<div v-if="isShowMenu">
-			<Menu :text-color="navStyle.textColor"
-						:active-text-color="navStyle.activeTextColor"
-						:background-color="navStyle.backgroundColor"
-						:style="{'background-color' : navStyle.backgroundColor}"
-						:mode="pattern == 2 ? 'horizontal' : 'vertical'">
+			<Menu style="width: 100%;"
+				    :text-color="$store.state.layout.navStyle.textColor"
+						:active-text-color="$store.state.layout.navStyle.activeTextColor"
+						:background-color="$store.state.layout.navStyle.backgroundColor"
+						:style="{'background-color' : $store.state.layout.navStyle.backgroundColor}"
+						:mode="$store.state.layout.pattern == 2 ? 'horizontal' : 'vertical'">
 				<Submenu index="1">
 					<template slot="title"><i class="el-icon-message"></i>导航一</template>
 					<MenuItemGroup>
@@ -58,10 +59,10 @@
 </template>
 <style scoped lang="less">
 	.l-menu{
-		width: 100%;
+		/*width: 100%;*/
 	}
 	.sidebar-menu{
-		width: 200px;
+		width: 100%;
 		/*transform: translate3d(-100%, 0, 0);*/
 		transition: transform .4s ease;
 	}
@@ -78,13 +79,11 @@
 			return {}
 		},
 		props: {
-			pattern:String,
 			visible:Boolean,
 			isShowMenu:{
 				type:Boolean,
 				default:true,
 			},
-			navStyle: Object
 		},
 		computed: {},
 		watch: {},

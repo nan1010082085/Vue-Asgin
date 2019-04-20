@@ -4,7 +4,7 @@
 			 :class="[{'header-fixed': fixedHeader}]">
 		<Header class="as-header"
 						:style="{'color' : navStyle.textColor}"
-						v-if="pattern === '1'">
+						v-if="pattern == '1'">
 			<div class="as-header-content">
 				<LHeaderContent :is-show-search="isShowSearch"></LHeaderContent>
 			</div>
@@ -13,12 +13,9 @@
 		<div v-else
 				 class="as-pattern-header"
 				 :style="{'color' : navStyle.textColor}">
-			<HNav :pattern="pattern"
-						:fixed-header="fixedHeader"
-						:is-show-menu="isShowMenu"
+			<HNav :is-show-menu="isShowMenu"
 						:is-show-search="isShowSearch"
-						:is-show-click-menu="isShowClickMenu"
-						:nav-style="navStyle"></HNav>
+						:is-show-click-menu="isShowClickMenu"></HNav>
 		</div>
 		<!-- 侧边导航 控制按钮-->
 		<div class="show-menu">
@@ -37,7 +34,8 @@
 		<Button class="setting"
 						type="text"
 						icon="el-icon-setting"
-						:style="{'color' : navStyle.textColor}"></Button>
+						:style="{'color' : navStyle.textColor}"
+						@click="handleSetting"></Button>
 	</div>
 </template>
 <style scoped lang="less">
@@ -89,7 +87,6 @@
 	import LHeaderContent from './l-hedaer-content'
 	import { resize }     from '../utils'
 	import { mapState }   from 'vuex'
-
 	export default {
 		components: { HNav, LHeaderContent },
 		mixins: [],
@@ -124,6 +121,9 @@
 			init () {
 				this.isShowSearch = document.body.offsetWidth <= this.widthPx ? false : true
 				this.isShowClickMenu = this.isShowMenu = this.pattern == 2 && document.body.offsetWidth <= 750 ? false : true
+			},
+      handleSetting(){
+			  this.$emit('setting')
 			}
 		},
 		filters: {}
