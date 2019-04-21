@@ -47,7 +47,7 @@
 	export default {
 		components: {},
 		mixins: [],
-		name: '',
+		name: 'LHeaderContent',
 		data () {
 			return {
 				restaurants: [],

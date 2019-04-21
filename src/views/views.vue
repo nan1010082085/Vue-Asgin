@@ -2,7 +2,7 @@
 	<Container class="as-views">
 		<LNav v-if="pattern == 1"></LNav>
 
-		<Container class="as-views-container"
+		<div class="as-views-container"
 							 :class="[
 							 			{'as-views-container-header-fixed' : fixedHeader},
 							 			{'as-views-container-fixed-nav' : fixedNav && pattern == 1}
@@ -13,7 +13,10 @@
 				'main-default plr10',
 				{'main-justify' : pattern == 2 || mainJustify}
 			]">
-					<Table :data="tableData" highlight-current-row>
+				<!--动态路由标签-->
+				<VRouter></VRouter>
+				<!--页面内容-->
+					<!--<Table :data="tableData" highlight-current-row>
 						<TableColumn type="index" width="50">
 						</TableColumn>
 						<TableColumn prop="date" label="日期" width="140">
@@ -22,14 +25,16 @@
 						</TableColumn>
 						<TableColumn prop="address" label="地址">
 						</TableColumn>
-					</Table>
-				<!--<router-view/>-->
+					</Table>-->
+				<div class="main-route-view">
+					<router-view></router-view>
+				</div>
 			</div>
 			<!-- 控制面板 -->
 			<Control :visible.sync="showControl"
 							 @close="handleHideControl"
 							 @layout="handleVuexLayout"></Control>
-		</Container>
+		</div>
 	</Container>
 </template>
 <style scoped lang="less">
@@ -38,11 +43,15 @@
 		position: relative;
 	}
 	.as-views-container{
+		width: 100%;
 		min-height: 100vh;
 		flex-wrap: wrap;
 	}
 	.main-default{
 		width: 100%;
+		.main-route-view{
+			width: 100%;
+		}
 	}
 	.main-justify{
 		margin: auto;
@@ -53,9 +62,10 @@
 	import LHeader from '../components/l-header'
 	import LNav from '../components/l-nav'
 	import Control from '../components/control'
+	import VRouter from '../components/v-router'
 	import {mapState, mapMutations} from 'vuex'
 	export default {
-		components: {LHeader,LNav,Control},
+		components: {LHeader,LNav,Control,VRouter},
 		mixins: [],
 		name: 'views',
 		data () {
@@ -80,8 +90,7 @@
 		},
 		watch: {},
 		created () {},
-		mounted () {
-		},
+		mounted () {},
 		methods: {
 			...mapMutations([
 				'setLayout'

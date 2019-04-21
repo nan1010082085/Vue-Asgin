@@ -5,6 +5,9 @@ import store from './store'
 /* element ui */
 import './components/element'
 
+/* mock 数据 */
+require('./mock/mock-login')
+require('./mock/mock-route')
 
 /* login */
 import VueParticles from 'vue-particles'

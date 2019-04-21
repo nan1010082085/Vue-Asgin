@@ -96,6 +96,7 @@
 			};
 
 			return {
+			  loading: '',
 				firstCode: true,
 				codeNumber: '获取验证码',
 				rapid: false, //是否是快捷登录 true 快捷 false
@@ -134,6 +135,7 @@
 		watch: {},
 		created () {},
 		mounted () {
+      localStorage.removeItem('register')
 			resize((r)=>{
 				try {
 					this.$refs[ 'particles' ].$el.style = 'width:100vw;height:100vh;'
@@ -176,8 +178,9 @@
 				console.log(params)
 				this.$refs[formName].validate((valid) => {
 					if (valid) {
-						// this.submit(params)
-						this.$router.push({name:'Views'})
+					  this.loading = this.$loading()
+            localStorage.removeItem('register');
+						this.submit(params)
 					} else {
 						this.$message.error('请完善登录信息')
 						return false;
@@ -187,7 +190,15 @@
 			submit(params){
 				login_hick(params)
 					.then(res=>{
-						this.$message.success('登录成功')
+            // console.log(res.data);
+            setTimeout(()=>{
+					    this.loading.close()
+              localStorage.setItem('register', JSON.stringify(res.data))
+              this.$message.success('登录成功')
+              this.$router.push('/views')
+						},1000)
+					  // console.log(res)
+
 					})
 			},
 			//重置表单

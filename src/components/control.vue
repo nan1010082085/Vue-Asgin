@@ -186,7 +186,7 @@
   export default {
     components : {},
     mixins : [],
-    name : '',
+    name : 'Control',
     data () {
       return {
         sideMenu : false,

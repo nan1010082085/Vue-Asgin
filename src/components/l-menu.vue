@@ -1,56 +1,27 @@
 <template>
 	<div class="l-menu">
 		<div v-if="isShowMenu">
-			<Menu
-				    :text-color="navStyle.textColor"
+			<Menu :text-color="navStyle.textColor"
 						:active-text-color="navStyle.activeTextColor"
 						:background-color="navStyle.backgroundColor"
 						:style="{'background-color' : navStyle.backgroundColor}"
-						:mode="pattern == 2 ? 'horizontal' : 'vertical'">
-				<Submenu index="1">
-					<template slot="title"><i class="el-icon-message"></i>导航一</template>
+						:mode="pattern == 2 ? 'horizontal' : 'vertical'"
+						:default-active="activeMenu">
+				<Submenu :style="pattern == 2 ? 'width: auto;':'width: 200px;'"
+								 :index="`${index}`"
+								 v-for="(menu,index) in getMenuList" :key="index">
+					<template slot="title">
+						<i class="el-icon-message"></i>
+						{{menu.label}}
+					</template>
 					<MenuItemGroup>
-						<template slot="title">分组一</template>
-						<MenuItem index="1-1">选项1</MenuItem>
-						<MenuItem index="1-2">选项2</MenuItem>
+						<MenuItem :index="`${index}-${jItems}`"
+											v-for="(item,jItems) in menu.children" :key="jItems"
+											@click="handleChange(item, `${index}-${jItems}`)">
+							<i class="el-icon-setting"></i>
+							{{item.label}}
+						</MenuItem>
 					</MenuItemGroup>
-					<MenuItemGroup title="分组2">
-						<MenuItem index="1-3">选项3</MenuItem>
-					</MenuItemGroup>
-					<Submenu index="1-4">
-						<template slot="title">选项4</template>
-						<MenuItem index="1-4-1">选项4-1</MenuItem>
-					</Submenu>
-				</Submenu>
-				<Submenu index="2">
-					<template slot="title"><i class="el-icon-menu"></i>导航二</template>
-					<MenuItemGroup>
-						<template slot="title">分组一</template>
-						<MenuItem index="2-1">选项1</MenuItem>
-						<MenuItem index="2-2">选项2</MenuItem>
-					</MenuItemGroup>
-					<MenuItemGroup title="分组2">
-						<MenuItem index="2-3">选项3</MenuItem>
-					</MenuItemGroup>
-					<Submenu index="2-4">
-						<template slot="title">选项4</template>
-						<MenuItem index="2-4-1">选项4-1</MenuItem>
-					</Submenu>
-				</Submenu>
-				<Submenu index="3">
-					<template slot="title"><i class="el-icon-setting"></i>导航三</template>
-					<MenuItemGroup>
-						<template slot="title">分组一</template>
-						<MenuItem index="3-1">选项1</MenuItem>
-						<MenuItem index="3-2">选项2</MenuItem>
-					</MenuItemGroup>
-					<MenuItemGroup title="分组2">
-						<MenuItem index="3-3">选项3</MenuItem>
-					</MenuItemGroup>
-					<Submenu index="3-4">
-						<template slot="title">选项4</template>
-						<MenuItem index="3-4-1">选项4-1</MenuItem>
-					</Submenu>
 				</Submenu>
 			</Menu>
 		</div>
@@ -71,13 +42,15 @@
 	}
 </style>
 <script>
-	import {mapState} from 'vuex'
+	import {mapState,mapMutations} from 'vuex'
 	export default {
 		components: {},
 		mixins: [],
-		name: '',
+		name: 'LMenu',
 		data () {
-			return {}
+			return {
+        activeIndex:'0-1',
+			}
 		},
 		props: {
 			visible:Boolean,
@@ -90,12 +63,36 @@
       ...mapState({
         pattern : state => state.layout.pattern,
         navStyle: state => state.layout.navStyle,
-      })
+        activeMenu: state => state.layout.activeMenu,
+      }),
+			getMenuList:{
+        get(){
+          return JSON.parse(localStorage.getItem('menu')).map(menu=>{
+            menu['check'] = false;
+            return menu
+					})
+				},
+				set(){
+
+				}
+			},
 		},
 		watch: {},
 		created () {},
 		mounted () {},
-		methods: {},
+		methods: {
+		  ...mapMutations([
+		    'setMenuList',
+				'setActiveMenu'
+			]),
+			handleChange(menuItem, index){
+        this.setActiveMenu(index)
+				//当前选中数组
+        menuItem['check'] = true
+		    this.setMenuList(menuItem)
+				this.$router.push({name:menuItem.name})
+			}
+		},
 		filters: {}
 	}
 </script>
