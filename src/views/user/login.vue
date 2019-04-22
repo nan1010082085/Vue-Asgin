@@ -2,7 +2,7 @@
 	<div class="login">
 		<vue-particles
 			ref="particles"
-			style="width: 100vw;height: 100vh;"
+			style="width: 100%;height: 100%;"
 			color="#dedede"
 			:particleOpacity="1"
 			:particlesNumber="120"
@@ -23,7 +23,7 @@
 		<div class="form-warp">
 			<Form v-show="!rapid" class="form" ref="form" :model="loginForm" :rules="ruleForm" label-width="80px" label-position="left">
 				<Row class="form-header">
-					<Col :span="12"><h1>登录</h1></Col>
+					<Col :span="12"><h1>Vue Asgin</h1></Col>
 					<Col :span="12" class="tar">
 						<Button type="text" @click="handleTigger('form')">快捷登录</Button>
 					</Col>
@@ -45,7 +45,7 @@
 			</Form>
 			<Form v-show="rapid" class="form" ref="formRap" :model="loginFormRap" :rules="ruleFormRap" label-width="80px" label-position="left">
 				<Row class="form-header">
-					<Col :span="12"><h1>登录</h1></Col>
+					<Col :span="12"><h1>Vue Asgin</h1></Col>
 					<Col :span="12" class="tar">
 						<Button type="text" @click="handleTigger('formRap')">普通登录</Button>
 					</Col>
@@ -190,15 +190,12 @@
 			submit(params){
 				login_hick(params)
 					.then(res=>{
-            // console.log(res.data);
             setTimeout(()=>{
 					    this.loading.close()
               localStorage.setItem('register', JSON.stringify(res.data))
               this.$message.success('登录成功')
               this.$router.push('/views')
 						},1000)
-					  // console.log(res)
-
 					})
 			},
 			//重置表单

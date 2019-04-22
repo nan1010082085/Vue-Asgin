@@ -16,16 +16,6 @@
 				<!--动态路由标签-->
 				<VRouter></VRouter>
 				<!--页面内容-->
-					<!--<Table :data="tableData" highlight-current-row>
-						<TableColumn type="index" width="50">
-						</TableColumn>
-						<TableColumn prop="date" label="日期" width="140">
-						</TableColumn>
-						<TableColumn prop="name" label="姓名" width="120">
-						</TableColumn>
-						<TableColumn prop="address" label="地址">
-						</TableColumn>
-					</Table>-->
 				<div class="main-route-view">
 					<router-view></router-view>
 				</div>

@@ -49,7 +49,7 @@
 		name: 'LMenu',
 		data () {
 			return {
-        activeIndex:'0-1',
+        activeIndex:'',
 			}
 		},
 		props: {
@@ -79,12 +79,19 @@
 		},
 		watch: {},
 		created () {},
-		mounted () {},
+		mounted () {
+			this.init()
+		},
 		methods: {
 		  ...mapMutations([
 		    'setMenuList',
 				'setActiveMenu'
 			]),
+			init(){
+				let arr = this.activeMenu.split('-')
+				let menuItem = this.getMenuList[arr[0]].children[arr[1]]
+				this.$router.push({name:menuItem.name})
+			},
 			handleChange(menuItem, index){
         this.setActiveMenu(index)
 				//当前选中数组

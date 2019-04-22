@@ -1,10 +1,5 @@
 import * as theme from '../assets/theme'
 
-import router from '../router'
-// Object.keys(theme).forEach(em => {
-// // 	console.log(em)
-// // })
-
 const state = {
 	pattern: '1',  //1 侧边导航模式  2 顶部导航模式
 	fixedNav: false,  //是否固定导航

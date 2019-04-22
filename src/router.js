@@ -6,17 +6,12 @@ Vue.use(Router)
 
 import { route_list } from "./api";
 
-//
 let route = {
   path : '/views',
   name : 'views',
   component : () => _imports('views'),
   children: []
 }
-// //动态添加路由
-// let routes = [
-//
-// ]
 
 const router = new Router({
   // mode: 'history',
@@ -35,14 +30,14 @@ const router = new Router({
   ]
 })
 
-//路由元
+/*
+* 路由元
+* */
 function routeElement ( route ) {
   let rElement = route
   rElement[ 'component' ] = () => _imports(route.location)
   return rElement
 }
-
-
 /*
 * 本地存储路由信息
 * 如果本地路由信息不存在则调用接口获取
@@ -107,7 +102,6 @@ router.beforeEach(( to, from, next ) => {
 router.afterEach(( to, from ) => {
   // console.log('route after', router)
 })
-
 router.onReady(( routes ) => {
   // console.log(routes, 'route ready')
 })
