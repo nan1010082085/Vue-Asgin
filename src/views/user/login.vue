@@ -79,6 +79,7 @@
 <script>
 	import { sendCode,resize } from '../../utils'
 	import {login_hick} from '../../api'
+	import {mapMutations} from 'vuex'
 	export default {
 		components: {},
 		mixins: [],
@@ -135,7 +136,8 @@
 		watch: {},
 		created () {},
 		mounted () {
-      localStorage.removeItem('register')
+			this.clear()
+			// localStorage.removeItem('register') && this.$router.push({name:'views'})
 			resize((r)=>{
 				try {
 					this.$refs[ 'particles' ].$el.style = 'width:100vw;height:100vh;'
@@ -143,6 +145,9 @@
 			})
 		},
 		methods: {
+			...mapMutations([
+				'clear'
+			]),
 			handleTigger(formName){
 				this.rapid = !this.rapid
 				this.$refs[formName].resetFields();
@@ -164,8 +169,8 @@
 			},
 			//提交登录
 			handleSubmit(formName){
-				console.log(this.$refs[ formName ])
-
+				// console.log(this.$refs[ formName ])
+				localStorage.removeItem('register')
 				let params = {}
 				if(this.rapid){
 					params['phone'] = this.loginFormRap.phone

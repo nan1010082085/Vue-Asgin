@@ -8,8 +8,9 @@ const state = {
 	navStyle: { //导航背景， 文字， 选中颜色
 		...theme.aquagreen
 	},
-  menuList:[],  //点击的 menuList tag
-  activeMenu:'', //当前选中的 menuItem
+	menuList: [],  //点击的 menuList tag
+	activeMenu: '', //当前选中的 menuItem
+	isAddMenu : false, //更新menu
 }
 
 const mutations = {
@@ -17,31 +18,56 @@ const mutations = {
 		state.pattern = layout.pattern
 		state.fixedNav = layout.fixedNav
 		state.fixedHeader = layout.fixedHeader
-    if(layout.navStyle.id){
-      state.navStyle = theme[layout.navStyle.id]
-    }
+		if (layout.navStyle.id) {
+			state.navStyle = theme[ layout.navStyle.id ]
+		}
 	},
-  setMenuList(state, menu){
-	  if(state.menuList.length > 0){
-      state.menuList.forEach((item,index)=>{
-        if(item.label == menu.label){
-          state.menuList[index] = menu
-          return
-        }else {
-          state.menuList.forEach((m)=>{
-            m['check'] = false;
-          })
-          state.menuList.push(menu)
-        }
-      })
-    }else {
-      state.menuList.push(menu)
-    }
-   
-  },
-  setActiveMenu(state, index){
-    state.activeMenu = index
-  }
+	setMenuList (state, menu) {
+		if (state.menuList.length > 0) {
+			let isExist = state.menuList.filter(item => item.label === menu.label).length > 0
+			state.menuList.map((m) => {
+				m[ 'check' ] = m.label == menu.label ? true : false
+				return m
+			})
+			if (!isExist) {
+				state.menuList.push(menu)
+			}
+		} else if (typeof menu == 'object') {
+			state.menuList.push(menu)
+		} else {
+			state.menuList = []
+		}
+	},
+	setActiveMenu (state, index) {
+		state.activeMenu = index
+	},
+	closeMenuList(state, name){
+		state.menuList.forEach((item,index) => {
+			if(item.name == name){
+				state.menuList.splice(index, 1)
+				return
+			}
+		})
+	},
+	updateMenuList(state, menu){
+		state.menuList.map(item => item['check'] = false)
+		state.menuList.forEach((item,index) => {
+			if(item.label == menu.label){
+				item['check'] = true
+			}
+		})
+	},
+	isAddMenu(state, bool){
+		state.isAddMenu = bool
+		setTimeout(()=>{
+			state.isAddMenu = false
+		},300)
+	},
+	clear(state){
+		state.menuList = []
+		state.activeMenu = ''
+		state.isAddMenu = false
+	}
 }
 
 const actions = {}
@@ -52,5 +78,5 @@ export default {
 	state,
 	mutations,
 	actions,
-  gutters
+	gutters
 }

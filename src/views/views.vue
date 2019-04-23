@@ -40,7 +40,7 @@
 	.main-default{
 		width: 100%;
 		.main-route-view{
-			width: 100%;
+			width: calc(100% - 1px);
 		}
 	}
 	.main-justify{
@@ -59,13 +59,7 @@
 		mixins: [],
 		name: 'views',
 		data () {
-			const item = {
-				date: '2016-05-02',
-				name: '王小虎',
-				address: '上海市普陀区金沙江路 1518 弄'
-			};
 			return {
-				tableData: Array(20).fill(item),
         showControl:false
 			}
 		},
@@ -100,7 +94,7 @@
           background:'rgba(0,0,0,.35)'
 				})
 				setTimeout(()=>{
-          loading.close()
+					loading.close()
 				}, 500)
 			},
 		},

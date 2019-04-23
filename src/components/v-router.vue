@@ -2,8 +2,9 @@
 	<div class="v-router" :class="{'v-router-show' : getMenuList.length>0}">
 		<Tag class="v-router-item"
 				 :class="{'v-router-item-active': r.check}"
-				 v-for="(r, i) in getMenuList" :key="i"
-				 @click.native="handleCheck(r)"
+				 v-for="(r, i) in menuList" :key="i"
+				 @click="handleCheck(r)"
+				 @close="handleClose(i,r)"
 				 closable>{{r.label}}</Tag>
 		<Popover
 			v-if="menuMoreList.length>0"
@@ -12,7 +13,10 @@
 			width="100"
 			trigger="hover">
 			<div class="v-router-more-list">
-				<Tag class="v-router-item" @click.native="handleMoreItemClick(r,i)" v-for="(r, i) in menuMoreList" :key="i" closable>{{r.name}}</Tag>
+				<Tag class="v-router-item"
+						 @click="handleMoreItemClick(r,i)"
+						 @close="handleMoreClose(i)"
+						 v-for="(r, i) in menuMoreList" :key="i" closable>{{r.label}}</Tag>
 			</div>
 			<Button slot="reference" size="mini" icon="el-icon-more" circle></Button>
 		</Popover>
@@ -25,7 +29,8 @@
 		flex-direction: row;
 		align-items: center;
 		width: 100%;
-		height: 40px;
+		padding-top: 5px;
+		height: auto;
 		transform: scale(0,0);
 		transform-origin: 50%;
 		transition: transform .3s ease-in;
@@ -59,7 +64,7 @@
 	}
 </style>
 <script>
-	import {mapState} from 'vuex'
+	import {mapState,mapMutations} from 'vuex'
   export default {
     name : "vRouter",
     data () {
@@ -73,19 +78,54 @@
 				vMenuList: state => state.layout.menuList
 			}),
 			getMenuList:{
-        get(){
-          return this.menuList = this.vMenuList
+				get(){
+					return this.menuList
+				}
+			},
+			getMenuMoreList:{
+				get(){
+					return this.menuMoreList
 				}
 			}
 		},
-    watch : {},
+    watch : {
+			vMenuList:{
+				handler(){
+					this.getData()
+				},
+				deep:true,
+				immediate:true
+			}
+		},
     methods : {
+    	...mapMutations([
+    		'setMenuList',
+				'setActiveMenu',
+				'updateMenuList'
+			]),
+			getData(){
+				this.menuList = this.vMenuList.length > 10
+					? this.vMenuList.splice(0,10)
+					: this.vMenuList
+    		this.menuMoreList =this.vMenuList.length > 10
+					? this.vMenuList.splice(10)
+					: []
+			},
       handleCheck(r){
-        this.menuList.forEach(er=>{
-          er.check = false
-				})
-        r.check = true
-				this.$router.push({name:r.name})
+        this.updateMenuList(r)
+				this.$router.push({name:r.name,query:r.query})
+			},
+			handleClose(i,r){
+    		// if(r.isShow){
+					this.menuList.splice(i, 1);
+					if(this.menuList[i-1]){
+						this.$router.push({name:this.menuList[i-1].name})
+						this.menuList[i-1]['check'] = true
+					}else {
+						this.$router.push({name:'views'})
+					}
+					this.setActiveMenu(null)
+				// }
 			},
 			//更多点击tag操作
       handleMoreItemClick(item,index){
@@ -96,7 +136,10 @@
 				//当前点击数据进入展示最后一位
         this.menuList.push(item)
 				this.handleCheck(item)
-			}
+			},
+			handleMoreClose(i){
+				this.menuMoreList.splice(i, 1)
+			},
 		}
   }
 </script>
