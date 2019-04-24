@@ -9,7 +9,7 @@
 			Vue Asgin
 		</div>
 		<div class="h-nav-menu" :style="{'background-color' : navStyle.backgroundColor}">
-			<LMenu :visable="isShowClickMenu" :is-show-menu="isShowMenu"></LMenu>
+			<LMenu :visible="isShowClickMenu" :is-show-menu="isShowMenu"></LMenu>
 			<LHeaderContent :is-show-search="isShowSearch"></LHeaderContent>
 		</div>
 	</div>

@@ -18,7 +18,27 @@
 				@click="handleIconClick"></Button>
 		</Autocomplete>
 
-		<img class="head-image" src="../assets/image/head.jpg" alt="head"/>
+		<Popover
+			style="margin-top: 20px;"
+			placement="bottom"
+			width="400"
+			trigger="hover">
+			<div class="content--popover-warp">
+				<img  style="width: 60px;height: 60px;" src="../assets/image/head.jpg" alt="head"/>
+				<Form class="card" label-width="80px" label-position="left">
+					<FormItem label="昵称:">
+						<div class="item-ctn">{{roleForm.name}}</div>
+					</FormItem>
+					<FormItem label="签名:">
+						<div class="item-ctn">{{roleForm.intro}}{{roleForm.intro}}</div>
+					</FormItem>
+					<FormItem label="登录时间:">
+						<div class="item-ctn">{{roleForm.date}}</div>
+					</FormItem>
+				</Form>
+			</div>
+			<img slot="reference" @click="visible = true" class="head-image" src="../assets/image/head.jpg" alt="head"/>
+		</Popover>
 	</div>
 </template>
 <style scoped lang="less">
@@ -42,6 +62,23 @@
 	.search{
 		width: 200px;
 	}
+
+	.content--popover-warp{
+		padding-top: 15px;
+		display: flex;
+		.card{
+			margin-left: 10px;
+			.item-ctn{
+				margin-bottom: 8px;
+				width: 100%;
+				min-height: 40px;
+				line-height: 1.15;
+			}
+			.el-form-item{
+				margin-bottom: 0;
+			}
+		}
+	}
 </style>
 <script>
 	export default {
@@ -52,7 +89,9 @@
 			return {
 				restaurants: [],
 				state: '',
-				timeout: null
+				timeout: null,
+				roleForm : {},
+        visible:false
 			}
 		},
 		props: {
@@ -65,6 +104,7 @@
 		watch: {},
 		mounted () {
 			this.restaurants = this.loadAll()
+			this.roleForm = JSON.parse(localStorage.getItem('register'))
 		},
 		methods: {
 			handleIconClick () {},

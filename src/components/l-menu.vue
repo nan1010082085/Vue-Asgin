@@ -35,7 +35,43 @@
 				</MenuItem>
 			</Menu>
 		</div>
-		<div class="sidebar-menu"></div>
+		<div v-else class="sidebar-menu"
+				 :class="{'sidebar-menu-show': visible}"
+				 :style="{'background-color' : navStyle.backgroundColor}">
+			<Menu ref="elMenu"
+						:text-color="navStyle.textColor"
+						:active-text-color="navStyle.activeTextColor"
+						:background-color="navStyle.backgroundColor"
+						:style="{'background-color' : navStyle.backgroundColor}"
+						mode="vertical"
+						:default-active="getActiveIndex"
+						router>
+				<Submenu :style="pattern == 2 && isShowMenu ? 'width: auto;':'width: 200px;'"
+								 :index="`${index}`"
+								 v-if="menu.children"
+								 v-for="(menu,index) in getMenuList" :key="index">
+					<template slot="title">
+						<i :class="menu.icon"></i>
+						{{menu.label}}
+					</template>
+					<MenuItemGroup>
+						<MenuItem :index="`${index}-${jItems}`"
+											v-if="item.isShow"
+											v-for="(item,jItems) in menu.children" :key="jItems"
+											@click="handleChange(item, `${index}-${jItems}`)">
+							<i :class="item.icon"></i>
+							{{item.label}}
+						</MenuItem>
+					</MenuItemGroup>
+				</Submenu>
+				<MenuItem :index="`${index}`"
+									v-if="!menu.children&&menu.isShow"
+									v-for="(menu,index) in getMenuList" :key="index">
+					<i :class="menu.icon"></i>
+					{{item.label}}
+				</MenuItem>
+			</Menu>
+		</div>
 	</div>
 </template>
 <style scoped lang="less">
@@ -43,12 +79,18 @@
 		/*width: 100%;*/
 	}
 	.sidebar-menu{
-		width: 100%;
-		/*transform: translate3d(-100%, 0, 0);*/
+		position: fixed;
+		z-index: 1000;
+		width: 200px;
+		top: 60px;
+		left: 0;
+		height: 100%;
+		text-align: left;
+		transform: translate3d(-200px, 0, 0);
 		transition: transform .4s ease;
 	}
 	.sidebar-menu-show{
-		transform: translate3d(100%, 0, 0);
+		transform: translate3d(0, 0, 0);
 	}
 </style>
 <script>
