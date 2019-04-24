@@ -54,8 +54,14 @@ function resize (callback) {
 	}, false)
 }
 
+function isHanzi (str) {
+	let reg = /^[\u4e00-\u9fa5]+$/
+  return !reg.test(str)
+}
+
 export {
 	isLocalStorageSupported,
 	sendCode,
-	resize
+	resize,
+	isHanzi
 }

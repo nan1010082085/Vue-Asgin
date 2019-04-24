@@ -33,7 +33,7 @@ const router = new Router({
       path : '/404',
       name : 'found-404',
       component : () => import(/* webpackChunkName: "utils" */ '@views/utils/404')
-    }
+    },
   ]
 })
 
@@ -71,10 +71,16 @@ function setAddRoutes () {
 	pushRouteList = []
 	let list = JSON.parse(localStorage.getItem('menu'))
 	let menuList = pushRoute(list)
-	// console.log(menuList)
-	router.options.routes = [...router.options.routes, ...[route]]
-	route['children'] = [...menuList]
-	router.addRoutes([route])
+	let arr = []
+	route['children'].forEach((routes)=>{
+		arr.push(routes.name)
+	})
+	menuList.forEach((item)=>{
+		if(!arr.includes(item.name)){
+			route['children'] = [...route['children'], ...[item]]
+			router.addRoutes([route])
+		}
+	})
 	localStorage.setItem('menuList', JSON.stringify(route))
 }
 function setAddRoutesMenuList(){
@@ -105,32 +111,39 @@ function setAddRoutesMenuList(){
 function isExistRoutes(){
 	pushRouteList = []
 	let list = JSON.parse(localStorage.getItem('menu'))
-	let olist = JSON.parse(localStorage.getItem('menuList')).children
+	let olist = route['children']
 	let menuList = pushRoute(list)
-	console.log(menuList,olist)
-	return menuList > olist ? true : false;
+	return menuList != olist ? true : false;
 }
 
 router.beforeEach(( to, from, next ) => {
-  // console.info(to);
+  console.info(router.options.routes,to);
 	if(router.options.isAddRoutesMenu){
 		if(isExistRoutes()){
-			setAddRoutes()
-			next()
+			if(to.name == null){
+				next('/404')
+			}else {
+				setAddRoutes()
+				next()
+			}
 		}else {
-			next()
+			//登录中 访问页面不存在
+			if ( localStorage.getItem('register') && to.name == null ) {
+			  next('/404')
+			}else if(!localStorage.getItem('register') && to.name != 'Login'){
+				next('/login')
+			}else {
+				next()
+			}
 		}
 	}else{
 		setAddRoutesMenuList()
-		next()
+		if(to.path === '/'){
+			next('/login')
+		}else {
+			next()
+		}
 	}
-	// setAddRoutes()
-  //登录中 访问页面不存在
-  // if ( localStorage.getItem('register') && to.name == null ) {
-  //   next('/404')
-  // }else if(!localStorage.getItem('register') && to.name != 'Login'){
-  // 	next('/login')
-	// }
 })
 router.afterEach(( to, from ) => {
   // console.log('route after', router)

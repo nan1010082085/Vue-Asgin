@@ -1,5 +1,5 @@
 <template>
-	<div class="v-router" :class="{'v-router-show' : getMenuList.length>0}">
+	<div class="v-router" :class="{'v-router-show' : menuList.length>0}">
 		<Tag class="v-router-item"
 				 :class="{'v-router-item-active': r.check}"
 				 v-for="(r, i) in menuList" :key="i"
@@ -37,10 +37,10 @@
 		&-item{
 			flex: none;
 			margin-right: 3px;
-			width:90px;
-			text-align: center;
-			text-overflow: ellipsis;
-			overflow: hidden;
+			/*width:90px;*/
+			/*text-align: center;*/
+			/*text-overflow: ellipsis;*/
+			/*overflow: hidden;*/
 			cursor: pointer;
 		}
 		&-item-active.el-tag{
@@ -103,6 +103,20 @@
 				'setActiveMenu',
 				'updateMenuList'
 			]),
+			getActiveIndex(label){
+				let menu = JSON.parse(localStorage.getItem('menu'))
+				let activeIndex = ''
+				menu.forEach((item,i)=>{
+					if(item.children){
+						item.children.forEach((items,j)=>{
+							if(items.label == label){
+								activeIndex = `${i}-${j}`
+							}
+						})
+					}
+				})
+				return activeIndex
+			},
 			getData(){
 				this.menuList = this.vMenuList.length > 10
 					? this.vMenuList.splice(0,10)
@@ -112,7 +126,8 @@
 					: []
 			},
       handleCheck(r){
-        this.updateMenuList(r)
+				this.setActiveMenu(this.getActiveIndex(r.label))
+				this.updateMenuList(r)
 				this.$router.push({name:r.name,query:r.query})
 			},
 			handleClose(i,r){

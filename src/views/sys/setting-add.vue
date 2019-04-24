@@ -59,7 +59,7 @@
 					<i class="el-icon-question ml5"></i>
 				</Tooltip>
 			</FormItem>
-			<FormItem class="form-item" label="路由所属菜单：">
+			<FormItem class="form-item" prop="parentId" label="路由所属菜单：">
 				<Select v-model="ruleForm.parentId" placeholder="请选择路由所属菜单" class="form-item-inp" size="small">
 					<Option
 						v-for="item in parentOption"
@@ -119,13 +119,23 @@
 	}
 </style>
 <script>
+	import {isHanzi} from '../../utils'
 	import { mapMutations } from 'vuex'
-
 	export default {
 		components: {},
 		mixins: [],
 		name: '',
 		data () {
+			const checkHanZi= (rule, value, callback) => {
+				if (!value) {
+					return callback(new Error('请输入展示名称'));
+				}
+				if(isHanzi(value)){
+					return callback(new Error('请输入中文汉字'));
+				}else {
+					callback()
+				}
+			};
 			return {
 				loading: '',
 				ruleFormSub: {
@@ -135,7 +145,7 @@
 				},
 				rulesSub: {
 					label: [
-						{ required: true, message: '请输入菜单名称', trigger: 'blur' }
+						{ required: true, validator : checkHanZi, trigger: 'blur' }
 					]
 				},
 				ruleForm: {
@@ -155,10 +165,13 @@
 						{ required: true, message: '请输入路由别名', trigger: 'blur' }
 					],
 					label: [
-						{ required: true, message: '请输入展示名称', trigger: 'blur' }
+						{ required: true, validator : checkHanZi, trigger: 'blur' }
 					],
 					location: [
 						{ required: true, message: '请输入页面所在路径', trigger: 'blur' }
+					],
+					parentId: [
+						{ required: true, message: '请选择路由所属菜单', trigger: 'blur' }
 					]
 				},
 				parentOption: []
@@ -255,7 +268,7 @@
 
 						// this.loading = this.$loading()
 					} else {
-						this.$message.error('请完善登录信息')
+						this.$message.error('请请添加完整的路由信息')
 						return false
 					}
 				})
@@ -265,6 +278,9 @@
 			},
 			handleIsShow () {},
 			successAdd (menuList) {
+				/*
+				* 重新设置新的数据
+				* */
 				localStorage.setItem('menu', JSON.stringify(menuList))
 				this.$message.success('添加成功')
 				this.closeMenuList(this.$route.name)

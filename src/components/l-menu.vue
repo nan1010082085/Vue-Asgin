@@ -133,6 +133,7 @@
 			},
 			updateData(bool){
 				if(bool){
+					console.log('update menuList')
 					this.menuList = JSON.parse(localStorage.getItem('menu')).map(menu=>{
 						menu['check'] = false;
 						return menu
