@@ -11,6 +11,7 @@ const state = {
 	menuList: [],  //点击的 menuList tag
 	activeMenu: '', //当前选中的 menuItem
 	isAddMenu : false, //更新menu
+	activeTabs:'',
 }
 
 const mutations = {
@@ -26,7 +27,7 @@ const mutations = {
 		if (state.menuList.length > 0) {
 			let isExist = state.menuList.filter(item => item.label === menu.label).length > 0
 			state.menuList.map((m) => {
-				m[ 'check' ] = m.label == menu.label ? true : false
+				// m[ 'check' ] = m.label == menu.label ? true : false
 				return m
 			})
 			if (!isExist) {
@@ -38,22 +39,16 @@ const mutations = {
 			state.menuList = []
 		}
 	},
-	setActiveMenu (state, index) {
-		state.activeMenu = index
+	setActiveMenu (state, params) {
+		console.log(params)
+		state.activeMenu = params.menu
+		state.activeTabs = params.tabs
 	},
 	closeMenuList(state, name){
 		state.menuList.forEach((item,index) => {
 			if(item.name == name){
 				state.menuList.splice(index, 1)
 				return
-			}
-		})
-	},
-	updateMenuList(state, menu){
-		state.menuList.map(item => item['check'] = false)
-		state.menuList.forEach((item,index) => {
-			if(item.label == menu.label){
-				item['check'] = true
 			}
 		})
 	},

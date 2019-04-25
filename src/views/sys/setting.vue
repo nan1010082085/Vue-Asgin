@@ -8,6 +8,12 @@
 			<TableColumn
 				prop="index"
 				label="等级"
+				width="50"
+			></TableColumn>
+			<TableColumn
+				prop="show"
+				label="显示"
+				width="100"
 			></TableColumn>
 			<TableColumn
 				prop="label"
@@ -30,9 +36,11 @@
 </template>
 <style scoped lang="less">
 	.setting{
+		padding: 10px;
 		width: auto;
 		height: 100%;
-		background-color: #f9f9f9;
+		background-color: #ffff;
+		border-radius: 8px;
 	}
 	.main-btn{
 		text-align: right;
@@ -72,7 +80,8 @@
 								label: menu.label,
 								name: menu.name,
 								path: menu.path,
-								location: menu.location
+								location: menu.location,
+								show:menu.isShow ? '✔' : '---'
 							}
 							if (menu.children) {
 								setIndex(menu.children, index+1)

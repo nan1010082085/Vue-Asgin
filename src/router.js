@@ -117,7 +117,7 @@ function isExistRoutes(){
 }
 
 router.beforeEach(( to, from, next ) => {
-  console.info(router.options.routes,to);
+  console.info(to);
 	if(router.options.isAddRoutesMenu){
 		if(isExistRoutes()){
 			if(to.name == null){

@@ -10,13 +10,13 @@
 			<LHeader @setting="showSetting"></LHeader>
 
 			<div :class="[
-				'main-default plr10',
+				'main-default',
 				{'main-justify' : pattern == 2 || mainJustify}
 			]">
 				<!--动态路由标签-->
 				<VRouter></VRouter>
 				<!--页面内容-->
-				<div class="main-route-view">
+				<div class="main-route-view plr10">
 					<router-view></router-view>
 				</div>
 			</div>
@@ -36,6 +36,7 @@
 		width: 100%;
 		min-height: 100vh;
 		flex-wrap: wrap;
+		background: #f9f9f9;
 	}
 	.main-default{
 		width: 100%;
