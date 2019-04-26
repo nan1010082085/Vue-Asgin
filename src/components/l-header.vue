@@ -90,6 +90,7 @@
 		left: 5px;
 		top: 25px;
 		z-index: 11;
+		cursor: pointer;
 	}
 </style>
 <script>

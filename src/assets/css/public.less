@@ -1,103 +1,127 @@
 @charset "UTF-8";
 @import "./style";
 /* scrollbar */
-::-webkit-scrollbar {/*滚动条整体样式*/
-	width: 8px;     /*高宽分别对应横竖滚动条的尺寸*/
+::-webkit-scrollbar { /*滚动条整体样式*/
+	width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
 	height: 8px;
 }
-::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+
+::-webkit-scrollbar-thumb { /*滚动条里面小方块*/
 	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+	-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 	background: #B3C0D1;
 }
-::-webkit-scrollbar-track {/*滚动条里面轨道*/
-	-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+
+::-webkit-scrollbar-track { /*滚动条里面轨道*/
+	-webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
 	border-radius: 10px;
 	background: #f6f8fa;
 }
 
 /*  font-size */
-.fz12{
+.fz12 {
 	font-size: @fz12;
 }
-.fz14{
+
+.fz14 {
 	font-size: @fz14;
 }
-.fz16{
+
+.fz16 {
 	font-size: @fz16;
 }
-.fz18{
+
+.fz18 {
 	font-size: @fz18;
 }
-.fz20{
+
+.fz20 {
 	font-size: @fz20;
 }
+
 /* padding */
-.p5{
+.p5 {
 	padding: 5px;
 }
-.p10{
+
+.p10 {
 	padding: 10px;
 }
-.plr5{
+
+.plr5 {
 	padding-left: 5px;
 	padding-right: 5px;
 }
-.plr10{
+
+.plr10 {
 	padding-left: 10px;
 	padding-right: 10px;
 }
-.ptb5{
+
+.ptb5 {
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
-.ptb10{
+
+.ptb10 {
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
+
 /* margin */
-.m5{
+.m5 {
 	margin: 5px;
 }
-.m10{
+
+.m10 {
 	margin: 10px;
 }
-.ml5{
+
+.ml5 {
 	margin-left: 5px;
 }
-.mr5{
+
+.mr5 {
 	margin-right: 5px;
 }
-.mlr5{
+
+.mlr5 {
 	margin-left: 5px;
 	margin-right: 5px;
 }
-.mlr10{
+
+.mlr10 {
 	margin-left: 10px;
 	margin-right: 10px;
 }
-.mtb5{
+
+.mtb5 {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-.mtb10{
+
+.mtb10 {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+
 /* text-align */
-.tal{
+.tal {
 	text-align: left;
 }
-.tac{
+
+.tac {
 	text-align: center;
 }
-.tar{
-	text-align: right!important;
+
+.tar {
+	text-align: right !important;
 }
+
 /* clearfix */
 
 .clearfix:before,
-.clearfix:after{
+.clearfix:after {
 	display: block;
 	content: '';
 	clear: both;
@@ -107,13 +131,14 @@
 .fade-enter-active, .fade-leave-active {
 	transition: opacity .5s;
 }
-.fade-enter, .fade-leave-to{
+
+.fade-enter, .fade-leave-to {
 	opacity: 0;
 }
 
 /* views */
 //固定导航模式 层级大于header
-.nav-fixed{
+.nav-fixed {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -122,7 +147,8 @@
 	overflow-x: hidden;
 	overflow-y: auto;
 }
-.nav-fixed-header{
+
+.nav-fixed-header {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -130,37 +156,43 @@
 	width: inherit;
 	height: 100%;
 }
-.nav-fixed-aside-header{
+
+.nav-fixed-aside-header {
 	margin-top: 60px;
 }
+
 //固定顶部
-.header-fixed{
-	position: fixed!important;
+.header-fixed {
+	position: fixed !important;
 	top: 0;
 	left: 0;
 	z-index: 10;
 }
+
 //侧边顶部宽度
 .header-width {
 	width: 100%;
 }
+
 //顶部宽度
-.header-top-width{
+.header-top-width {
 	width: calc(100% - 50px);
 }
-.header-fixed-min-width{
+
+.header-fixed-min-width {
 	width: 100%;
 }
 
-.as-views-container-header-fixed{
+.as-views-container-header-fixed {
 	padding-top: 60px;
 }
-.as-views-container-fixed-nav{
+
+.as-views-container-fixed-nav {
 	padding-left: 200px;
 }
 
 /* element */
-.el-submenu__title i,.el-menu-item i{
+.el-submenu__title i, .el-menu-item i {
 	color: #ffffff;
 }
 .v-router-tabs{
@@ -169,7 +201,12 @@
 		background: #fff;
 		box-shadow: 0 -2px 2px 0 #fff;
 	}
-	.el-tabs__nav-scroll{
+	.el-tabs__nav-scroll {
 		background: #fff;
+	}
+}
+.content--popover-warp > .card {
+	 .el-form-item__label {
+		line-height: 1.15;
 	}
 }
