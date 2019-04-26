@@ -56,20 +56,23 @@ const mutations = {
 		state.tabsList.forEach((item,index) => {
 			if(item.path == name){
 				state.tabsList.splice(index, 1)
-				
 				if(state.tabsList.length > 0){
 					/*
 					* 自动跳转前一个tabs 如是menu导航则自动选中
 					* 前一个跳转路由赋值
 					* */
 					try {
-						let params = state.tabsList[index - 1]
+						let params = state.tabsList[ index - 1 < 0 ? 0 : index - 1 ]
 						state.activeMenu = 	`${params.parentId}-${params.path}`
 						state.activeTabs = 	params.path
 						state.closeRouterName = {name:params.name,query:params.query }
 					}catch (e) {}
+				}else {
+					state.activeMenu = 	''
+					state.activeTabs = ''
+					state.closeRouterName = ''
 				}
-				return
+				return false
 			}
 		})
 	},
