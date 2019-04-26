@@ -29,7 +29,7 @@
 			></TableColumn>
 			<TableColumn
 				prop="location"
-				label="所在位置 views/"
+				label="所在位置"
 			></TableColumn>
 		</Table>
 	</div>
@@ -47,6 +47,7 @@
 	}
 </style>
 <script>
+	import {mapMutations} from 'vuex'
   export default {
     components : {},
     mixins : [],
@@ -61,13 +62,11 @@
     computed : {},
     watch : {},
     methods : {
+    	...mapMutations([
+    		'setMenuList',
+    		'setActiveTabs'
+			]),
     	init(){
-    		// this.loading = this.$loading({
-				// 	lock: true,
-				// 	text: 'Loading...',
-				// 	spinner: 'el-icon-loading',
-				// 	background: 'rgba(0, 0, 0, 0.7)'
-				// })
     		let menu = JSON.parse(localStorage.getItem('menu'));
     		let arr = [];
 				function setIndex (list,index) {
@@ -78,9 +77,9 @@
 							let Obj = {
 								index: index,
 								label: menu.label,
-								name: menu.name,
-								path: menu.path,
-								location: menu.location,
+								name: !menu.name ? '---' : menu.name,
+								path: !menu.path ? '---' : menu.path,
+								location: 'views/'+menu.location,
 								show:menu.isShow ? '✔' : '---'
 							}
 							if (menu.children) {
@@ -102,11 +101,19 @@
 					}
 				})
 				setTimeout(()=>{
-					// this.loading.close()
 					this.tabData = arr
 				},500)
 			},
 			goSettingAddSubMenu(){
+    		this.setMenuList({
+					path:'setting-menu-add',
+					name:'setting-add',
+					label:'添加菜单',
+					query:{
+						status:'sub-menu'
+					}
+				})
+    		this.setActiveTabs({tabs:'setting-menu-add'})
 				this.$router.push({
 					name:'setting-add',
 					query:{
@@ -115,6 +122,15 @@
 				})
 			},
 			goSettingAddMenu(){
+				this.setMenuList({
+					path:'setting-add',
+					name:'setting-add',
+					label:'添加路由',
+					query:{
+						status:'menu'
+					}
+				})
+				this.setActiveTabs({tabs:'setting-add'})
     		this.$router.push({
 					name:'setting-add',
 					query:{

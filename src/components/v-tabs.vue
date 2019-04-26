@@ -7,8 +7,7 @@
 					closable>
 			<TabPane 	 v-for="(r, i) in getMenuList" :key="i"
 								 :label="r.label"
-								 :value="r.name"
-								 :name="r.name"
+								 :name="r.path"
 								 ></TabPane>
 		</Tabs>
 	</div>
@@ -24,13 +23,14 @@
     name : "vRouter",
     data () {
       return {
-				activeName:'',
+      	activeName:'',
         menuList: []
 			}
     },
     computed : {
       ...mapState({
-				vMenuList: state => state.layout.menuList,
+				tabsList: state => state.layout.tabsList,
+				activeTabs: state => state.layout.activeTabs,
 				vNavStyle: state => state.layout.navStyle
 			}),
 			getMenuList:{
@@ -40,29 +40,41 @@
 			},
 		},
     watch : {
-			vMenuList:{
-				handler(){
-					this.getData()
-				},
+			tabsList:{
+				handler:'getData',
 				deep:true,
 				immediate:true
-			}
+			},
+			'activeTabs':'getTabs'
 		},
     methods : {
     	...mapMutations([
     		'setMenuList',
 				'setActiveMenu',
-				'closeMenuList'
+				'closeMenuList',
+				'closeTabs'
 			]),
 			handleClick(evt){
-				console.log(evt)
+				this.menuList.forEach((item)=>{
+					if(item.path === evt.name){
+						this.setActiveMenu({menu: `${item.parentId}-${item.path}`, tabs: item.path})
+						this.$router.push({name:item.name,query:item.query})
+						return false
+					}
+				})
 			},
 			handleRemove(evt){
-				console.log(evt)
 				this.closeMenuList(evt)
+				if(this.tabsList.toString() === ''){
+					this.closeTabs()
+					this.$router.push({name:'views'})
+				}
 			},
-			getData(){
-				this.menuList = this.vMenuList
+			getTabs(tabs){
+				this.activeName = tabs
+			},
+			getData(tabs){
+				this.menuList = tabs
 			}
 		}
   }

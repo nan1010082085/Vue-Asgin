@@ -5,7 +5,7 @@ const Random = Mock.Random;
 const routeData = function () {
   let route = [
     {
-      id:'00001',
+      id:'0',
       label:'系统设置',
 			icon:'el-icon-setting',
 			isShow:true,
@@ -18,6 +18,7 @@ const routeData = function () {
 					location:'sys/setting',
 					isShow:true,
           component:'',
+					parentId:'0',
         },
 				{
 					path:'cs-add',
@@ -27,6 +28,7 @@ const routeData = function () {
 					location:'sys/cs-add',
 					isShow:true,
 					component:'',
+					parentId:'0',
 				},
 				{
 					path:'cs-add2',
@@ -36,6 +38,7 @@ const routeData = function () {
 					location:'sys/cs-add2',
 					isShow:true,
 					component:'',
+					parentId:'0',
 				},
 				{
 					path:'setting-add',

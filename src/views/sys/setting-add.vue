@@ -265,8 +265,6 @@
 								this.$message.warning('当前添加名称已存在')
 							}
 						}
-
-						// this.loading = this.$loading()
 					} else {
 						this.$message.error('请请添加完整的路由信息')
 						return false

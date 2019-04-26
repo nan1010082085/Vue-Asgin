@@ -8,10 +8,11 @@ const state = {
 	navStyle: { //导航背景， 文字， 选中颜色
 		...theme.aquagreen
 	},
-	menuList: [],  //点击的 menuList tag
-	activeMenu: '', //当前选中的 menuItem
-	isAddMenu : false, //更新menu
+	tabsList: [],
+	activeMenu: '',
 	activeTabs:'',
+	closeRouterName:'',  //关闭tabs 后自动跳转的路由
+	isAddMenu : false, //更新menu
 }
 
 const mutations = {
@@ -23,34 +24,58 @@ const mutations = {
 			state.navStyle = theme[ layout.navStyle.id ]
 		}
 	},
+	//添加tabs
 	setMenuList (state, menu) {
-		if (state.menuList.length > 0) {
-			let isExist = state.menuList.filter(item => item.label === menu.label).length > 0
-			state.menuList.map((m) => {
-				// m[ 'check' ] = m.label == menu.label ? true : false
-				return m
-			})
+		if (state.tabsList.length > 0) {
+			let isExist = state.tabsList.filter(item => item.label === menu.label).length > 0
 			if (!isExist) {
-				state.menuList.push(menu)
+				state.tabsList.push(menu)
 			}
 		} else if (typeof menu == 'object') {
-			state.menuList.push(menu)
+			state.tabsList.push(menu)
 		} else {
-			state.menuList = []
+			state.tabsList = []
 		}
 	},
+	/*
+	* @setActiveMenu 选择中menu 和 tabs
+	* @setActiveTabs 选中 tabs
+	* 选中menu 或 tabs 清空closeRouterName 赋值
+	* */
 	setActiveMenu (state, params) {
-		console.log(params)
 		state.activeMenu = params.menu
 		state.activeTabs = params.tabs
+		state.closeRouterName = ''
 	},
+	setActiveTabs (state, params) {
+		state.activeTabs = params.tabs
+		state.closeRouterName = ''
+	},
+	//删除tabs
 	closeMenuList(state, name){
-		state.menuList.forEach((item,index) => {
-			if(item.name == name){
-				state.menuList.splice(index, 1)
+		state.tabsList.forEach((item,index) => {
+			if(item.path == name){
+				state.tabsList.splice(index, 1)
+				
+				if(state.tabsList.length > 0){
+					/*
+					* 自动跳转前一个tabs 如是menu导航则自动选中
+					* 前一个跳转路由赋值
+					* */
+					try {
+						let params = state.tabsList[index - 1]
+						state.activeMenu = 	`${params.parentId}-${params.path}`
+						state.activeTabs = 	params.path
+						state.closeRouterName = {name:params.name,query:params.query }
+					}catch (e) {}
+				}
 				return
 			}
 		})
+	},
+	//清空tabs
+	closeTabs(state){
+		state.activeTabs = ''
 	},
 	isAddMenu(state, bool){
 		state.isAddMenu = bool
@@ -59,8 +84,10 @@ const mutations = {
 		},300)
 	},
 	clear(state){
-		state.menuList = []
+		state.tabsList = []
 		state.activeMenu = ''
+		state.activeTabs = ''
+		state.closeRouterName = ''
 		state.isAddMenu = false
 	}
 }

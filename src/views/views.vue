@@ -14,7 +14,7 @@
 				{'main-justify' : pattern == 2 || mainJustify}
 			]">
 				<!--动态路由标签-->
-				<VRouter></VRouter>
+				<VTabs></VTabs>
 				<!--页面内容-->
 				<div class="main-route-view plr10">
 					<router-view></router-view>
@@ -53,10 +53,10 @@
 	import LHeader from '../components/l-header'
 	import LNav from '../components/l-nav'
 	import Control from '../components/control'
-	import VRouter from '../components/v-router'
+	import VTabs from '../components/v-tabs'
 	import {mapState, mapMutations} from 'vuex'
 	export default {
-		components: {LHeader,LNav,Control,VRouter},
+		components: {LHeader,LNav,Control,VTabs},
 		mixins: [],
 		name: 'views',
 		data () {
@@ -75,7 +75,9 @@
 		},
 		watch: {},
 		created () {},
-		mounted () {},
+		mounted () {
+			// this.$router.push({name:'views'})
+		},
 		methods: {
 			...mapMutations([
 				'setLayout'

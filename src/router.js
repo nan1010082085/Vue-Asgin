@@ -117,15 +117,11 @@ function isExistRoutes(){
 }
 
 router.beforeEach(( to, from, next ) => {
-  console.info(to);
+  // console.info(to);
 	if(router.options.isAddRoutesMenu){
 		if(isExistRoutes()){
-			if(to.name == null){
-				next('/404')
-			}else {
-				setAddRoutes()
-				next()
-			}
+			setAddRoutes()
+			next()
 		}else {
 			//登录中 访问页面不存在
 			if ( localStorage.getItem('register') && to.name == null ) {

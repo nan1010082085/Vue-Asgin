@@ -10,7 +10,7 @@
 						:default-active="getActiveIndex"
 						router>
 				<Submenu :style="pattern == 2 ? 'width: auto;':'width: 200px;'"
-								 :index="`${index}`"
+								 :index="`${menu.id}`"
 								 v-if="menu.children"
 								 v-for="(menu,index) in getMenuList" :key="index">
 					<template slot="title">
@@ -18,10 +18,10 @@
 						{{menu.label}}
 					</template>
 					<MenuItemGroup>
-						<MenuItem :index="`${index}-${jItems}`"
+						<MenuItem :index="`${menu.id}-${item.path}`"
 											v-if="item.isShow"
 											v-for="(item,jItems) in menu.children" :key="jItems"
-											@click="handleChange(item, `${index}-${jItems}`, item.path)">
+											@click="handleChange(item, `${menu.id}-${item.path}`, item.path)">
 							<i :class="item.icon"></i>
 							{{item.label}}
 						</MenuItem>
@@ -47,7 +47,7 @@
 						:default-active="getActiveIndex"
 						router>
 				<Submenu :style="pattern == 2 && isShowMenu ? 'width: auto;':'width: 200px;'"
-								 :index="`${index}`"
+								 :index="`${menu.id}`"
 								 v-if="menu.children"
 								 v-for="(menu,index) in getMenuList" :key="index">
 					<template slot="title">
@@ -55,10 +55,10 @@
 						{{menu.label}}
 					</template>
 					<MenuItemGroup>
-						<MenuItem :index="`${index}-${jItems}`"
+						<MenuItem :index="`${menu.id}-${item.path}`"
 											v-if="item.isShow"
 											v-for="(item,jItems) in menu.children" :key="jItems"
-											@click="handleChange(item, `${index}-${jItems}`)">
+											@click="handleChange(item, `${menu.id}-${item.path}`, item.path)">
 							<i :class="item.icon"></i>
 							{{item.label}}
 						</MenuItem>
@@ -118,7 +118,8 @@
 				pattern: state => state.layout.pattern,
 				navStyle: state => state.layout.navStyle,
 				activeMenu: state => state.layout.activeMenu,
-				isAddMenu: state => state.layout.isAddMenu
+				isAddMenu: state => state.layout.isAddMenu,
+				closeRouterName: state => state.layout.closeRouterName,
 			}),
 			getActiveIndex: {
 				get () {
@@ -134,35 +135,25 @@
 		watch: {
 			activeIndex: {
 				handler (atIndex) {
-					// console.log(this.$refs['elMenu'].activeIndex)
-					this.$refs[ 'elMenu' ].activeIndex = atIndex
+					this.$refs[ 'elMenu' ].activeIndex = atIndex;
+					/*
+					* tabs删除时
+					*
+					* */
+					if(this.closeRouterName){
+						this.$router.push({name:this.closeRouterName.name,query:this.closeRouterName.query})
+					}
 				}
 			},
-			'$route': {
-				handler (to) {
-					//重新提交选中路由状态
-					this.menuList.forEach((item, index) => {
-						if (item.children) {
-							item.children.forEach((items, jItems) => {
-								if (items.name == to.name) {
-									this.handleChange(items, `${index}-${jItems}`)
-									return
-								}
-							})
-						}
-					})
-				}
+			menuList: {
+				handler :'initMenuList'
 			},
 			isAddMenu: 'updateData'
 		},
 		created () {
 			this.getData()
 		},
-		mounted () {
-			if (this.activeMenu && this.activeMenu != '') {
-				this.init()
-			}
-		},
+		mounted () {},
 		methods: {
 			...mapMutations([
 				'setMenuList',
@@ -176,17 +167,25 @@
 					this.menuList = JSON.parse(localStorage.getItem('menu'))
 				}
 			},
-			init () {
-				let loading = this.$loading()
-				setTimeout(() => {
-					let arr = this.activeMenu.split('-')
-					let menuItem = this.menuList[ arr[ 0 ] ].children[ arr[ 1 ] ]
-					// this.$router.push({ name: menuItem.name, query: this.$route.query })
-					loading.close()
-				}, 500)
+			initMenuList(list){
+				/*
+				* 初始化数据 --- 刷新网页时
+				* */
+				if(this.activeIndex === ''){
+					list.forEach((item) => {
+						if (item.children) {
+							item.children.forEach((items) => {
+								if (items.path == this.$route.name) {
+									this.handleChange(items, `${items.parentId}-${items.path}`, items.path)
+									return
+								}
+							})
+						}
+					})
+				}
 			},
+			/* 导航跳转时 */
 			handleChange (menuItem, index, tabs) {
-				console.log(menuItem)
 				this.setActiveMenu({ menu: index, tabs: tabs })
 				menuItem[ 'query' ] = this.$route.query
 				this.setMenuList(menuItem)
