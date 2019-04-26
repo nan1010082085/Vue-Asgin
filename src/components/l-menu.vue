@@ -7,8 +7,7 @@
 						:background-color="navStyle.backgroundColor"
 						:style="{'background-color' : navStyle.backgroundColor}"
 						:mode="pattern == 2 ? 'horizontal' : 'vertical'"
-						:default-active="getActiveIndex"
-						router>
+						:default-active="getActiveIndex">
 				<Submenu :style="pattern == 2 ? 'width: auto;':'width: 200px;'"
 								 :index="`${menu.id}`"
 								 v-if="menu.children"

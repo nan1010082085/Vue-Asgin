@@ -15,6 +15,18 @@ let route = {
 		next();
 	}
 }
+const routesDefault = [
+	{
+		path : '/login',
+		name : 'Login',
+		component : () => _imports('user/login')
+	},
+	{
+		path : '/404',
+		name : 'found-404',
+		component : () => import(/* webpackChunkName: "utils" */ '@views/utils/404')
+	},
+]
 
 const router = new Router({
   // mode: 'history',
@@ -23,18 +35,7 @@ const router = new Router({
 	scrollBehavior (to, from, savedPosition) {
 		return { y: 0 }
 	},
-  routes : [
-    {
-      path : '/login',
-      name : 'Login',
-      component : () => _imports('user/login')
-    },
-    {
-      path : '/404',
-      name : 'found-404',
-      component : () => import(/* webpackChunkName: "utils" */ '@views/utils/404')
-    },
-  ]
+  routes : routesDefault.concat([route])
 })
 
 /*
@@ -97,7 +98,6 @@ function setAddRoutesMenuList(){
 	})
 	menu.then(menus => {
 		route['children'] = [...menus]
-		router.options.routes = [...router.options.routes, ...[route]]
 		router.options.isAddRoutesMenu = true
 		router.addRoutes([route])
 		localStorage.setItem('menuList', JSON.stringify(route))
@@ -117,11 +117,14 @@ function isExistRoutes(){
 }
 
 router.beforeEach(( to, from, next ) => {
-  // console.info(to);
 	if(router.options.isAddRoutesMenu){
 		if(isExistRoutes()){
 			setAddRoutes()
-			next()
+			if(to.name == null ){
+				next('/404')
+			}else {
+				next()
+			}
 		}else {
 			//登录中 访问页面不存在
 			if ( localStorage.getItem('register') && to.name == null ) {
@@ -134,6 +137,7 @@ router.beforeEach(( to, from, next ) => {
 		}
 	}else{
 		setAddRoutesMenuList()
+		console.log(router, 'before false')
 		if(to.path === '/'){
 			next('/login')
 		}else {
@@ -143,9 +147,6 @@ router.beforeEach(( to, from, next ) => {
 })
 router.afterEach(( to, from ) => {
   // console.log('route after', router)
-})
-router.onReady(( routes ) => {
-  // console.log(routes, 'route ready')
 })
 
 export default router

@@ -97,6 +97,7 @@
 			};
 
 			return {
+				str: '',
 			  loading: '',
 				firstCode: true,
 				codeNumber: '获取验证码',
@@ -134,7 +135,8 @@
 		props: {},
 		computed: {},
 		watch: {},
-		created () {},
+		created () {
+		},
 		mounted () {
 			this.clear()
 			// localStorage.removeItem('register') && this.$router.push({name:'views'})

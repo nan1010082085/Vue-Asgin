@@ -42,6 +42,7 @@
 		width: 100%;
 		.main-route-view{
 			width: calc(100% - 1px);
+			transition: none;
 		}
 	}
 	.main-justify{
