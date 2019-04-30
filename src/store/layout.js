@@ -27,7 +27,7 @@ const mutations = {
 	//添加tabs
 	setMenuList (state, menu) {
 		if (state.tabsList.length > 0) {
-			let isExist = state.tabsList.filter(item => item.label === menu.label).length > 0
+			let isExist = state.tabsList.filter(item => item.meta.label === menu.meta.label).length > 0
 			if (!isExist) {
 				state.tabsList.push(menu)
 			}

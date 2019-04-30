@@ -9,28 +9,26 @@
 						:mode="pattern == 2 ? 'horizontal' : 'vertical'"
 						:default-active="getActiveIndex">
 				<Submenu :style="pattern == 2 ? 'width: auto;':'width: 200px;'"
-								 :index="`${menu.id}`"
+								 :index="`${menu._id}`"
 								 v-if="menu.children"
 								 v-for="(menu,index) in getMenuList" :key="index">
 					<template slot="title">
-						<i :class="menu.icon"></i>
-						{{menu.label}}
+						<i :class="[menu.meta.icon]"></i>
+						{{menu.meta.label}}
 					</template>
-					<MenuItemGroup>
-						<MenuItem :index="`${menu.id}-${item.path}`"
-											v-if="item.isShow"
-											v-for="(item,jItems) in menu.children" :key="jItems"
-											@click="handleChange(item, `${menu.id}-${item.path}`, item.path)">
-							<i :class="item.icon"></i>
-							{{item.label}}
-						</MenuItem>
-					</MenuItemGroup>
+					<MenuItem :index="`${menu._id}-${item.path}`"
+										v-if="item.meta.isShow"
+										v-for="(item,jItems) in menu.children" :key="jItems"
+										@click="handleChange(item, `${menu._id}-${item.path}`, item.path)">
+						<i :class="[item.meta.icon]"></i>
+						{{item.meta.label}}
+					</MenuItem>
 				</Submenu>
-				<MenuItem :index="`${index}`"
-									v-if="!menu.children&&menu.isShow"
+				<MenuItem :index="`${menu._id}`"
+									v-if="!menu.children&&menu.meta.isShow"
 									v-for="(menu,index) in getMenuList" :key="index">
-					<i :class="menu.icon"></i>
-					{{item.label}}
+					<i :class="[menu.meta.icon]"></i>
+					{{item.meta.label}}
 				</MenuItem>
 			</Menu>
 		</div>
@@ -46,28 +44,26 @@
 						:default-active="getActiveIndex"
 						router>
 				<Submenu :style="pattern == 2 && isShowMenu ? 'width: auto;':'width: 200px;'"
-								 :index="`${menu.id}`"
+								 :index="`${menu._id}`"
 								 v-if="menu.children"
 								 v-for="(menu,index) in getMenuList" :key="index">
 					<template slot="title">
-						<i :class="menu.icon"></i>
-						{{menu.label}}
+						<i :class="[menu.meta.icon]"></i>
+						{{menu.meta.label}}
 					</template>
-					<MenuItemGroup>
-						<MenuItem :index="`${menu.id}-${item.path}`"
-											v-if="item.isShow"
-											v-for="(item,jItems) in menu.children" :key="jItems"
-											@click="handleChange(item, `${menu.id}-${item.path}`, item.path)">
-							<i :class="item.icon"></i>
-							{{item.label}}
-						</MenuItem>
-					</MenuItemGroup>
+					<MenuItem :index="`${menu._id}-${item.path}`"
+										v-if="item.isShow"
+										v-for="(item,jItems) in menu.children" :key="jItems"
+										@click="handleChange(item, `${menu._id}-${item.path}`, item.path)">
+						<i :class="[item.meta.icon]"></i>
+						{{item.meta.label}}
+					</MenuItem>
 				</Submenu>
-				<MenuItem :index="`${index}`"
-									v-if="!menu.children&&menu.isShow"
+				<MenuItem :index="`${menu._id}`"
+									v-if="!menu.children&&menu.meta.isShow"
 									v-for="(menu,index) in getMenuList" :key="index">
-					<i :class="menu.icon"></i>
-					{{item.label}}
+					<i :class="[menu.meta.icon]"></i>
+					{{item.meta.label}}
 				</MenuItem>
 			</Menu>
 		</div>
@@ -135,13 +131,11 @@
 			activeIndex: {
 				handler (atIndex) {
 					this.$refs[ 'elMenu' ].activeIndex = atIndex;
-					/*
-					* tabs删除时
-					*
-					* */
-					if(this.closeRouterName){
-						this.$router.push({name:this.closeRouterName.name,query:this.closeRouterName.query})
-					}
+				}
+			},
+			closeRouterName(route){
+				if(route){
+					this.$router.push({name:route.name,query:route.query})
 				}
 			},
 			menuList: {

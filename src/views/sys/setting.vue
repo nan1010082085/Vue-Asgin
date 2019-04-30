@@ -1,8 +1,7 @@
 <template>
 	<div class="setting">
 		<section class="main-btn ptb5">
-			<Button type="primary" size="small" @click="goSettingAddSubMenu">添加菜单</Button>
-			<Button type="primary" size="small" @click="goSettingAddMenu">添加路由</Button>
+			<Button type="primary" size="small" @click="goSettingAddMenu">添加导航</Button>
 		</section>
 		<Table :data="tabData" style="width: 100%;">
 			<TableColumn
@@ -31,6 +30,15 @@
 				prop="location"
 				label="所在位置"
 			></TableColumn>
+			<TableColumn
+				label="操作"
+				width="150"
+			>
+				<template slot-scope="scope">
+					<Button type="primary" size="mini" @click="handleEdit(scope.row)">编辑</Button>
+					<Button type="danger" size="mini">删除</Button>
+				</template>
+			</TableColumn>
 		</Table>
 	</div>
 </template>
@@ -47,6 +55,7 @@
 	}
 </style>
 <script>
+	import {getRouteItem,goTabsRoute} from '../../utils'
 	import {mapMutations} from 'vuex'
   export default {
     components : {},
@@ -75,12 +84,14 @@
 					}else {
 						list.forEach(menu => {
 							let Obj = {
+								id:menu._id,
 								index: index,
-								label: menu.label,
-								name: !menu.name ? '---' : menu.name,
-								path: !menu.path ? '---' : menu.path,
-								location: 'views/'+menu.location,
-								show:menu.isShow ? '✔' : '---'
+								label: menu.meta.label,
+								name: menu.name == '' ? '---' : menu.name,
+								path: menu.path == '' ? '---' : menu.path,
+								icon: menu.meta.icon == '' ? '---' : menu.path,
+								location: 'views/'+menu.meta.location,
+								show:menu.meta.isShow ? '✔' : '---'
 							}
 							if (menu.children) {
 								setIndex(menu.children, index+1)
@@ -104,40 +115,19 @@
 					this.tabData = arr
 				},500)
 			},
-			goSettingAddSubMenu(){
-    		this.setMenuList({
-					path:'setting-menu-add',
-					name:'setting-add',
-					label:'添加菜单',
-					query:{
-						status:'sub-menu'
-					}
-				})
-    		this.setActiveTabs({tabs:'setting-menu-add'})
-				this.$router.push({
-					name:'setting-add',
-					query:{
-						status:'sub-menu'
-					}
-				})
-			},
 			goSettingAddMenu(){
-				this.setMenuList({
-					path:'setting-add',
-					name:'setting-add',
-					label:'添加路由',
-					query:{
-						status:'menu'
-					}
+				goTabsRoute(this.$router, 'add-menu-item', {}, (menu, route)=>{
+					this.setMenuList(menu)
+					this.setActiveTabs({tabs: route.path})
 				})
-				this.setActiveTabs({tabs:'setting-add'})
-    		this.$router.push({
-					name:'setting-add',
-					query:{
-						status:'menu'
-					}
-    		})
 			},
+			handleEdit(row){
+				goTabsRoute(this.$router, 'add-menu-item', {id:row.id, status:'edit'}, (menu, route)=>{
+					console.log(menu)
+					this.setMenuList(menu)
+					this.setActiveTabs({tabs: route.path})
+				})
+			}
 		},
     mounted () {
     },

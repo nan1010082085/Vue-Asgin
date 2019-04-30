@@ -4,46 +4,50 @@ import _imports from './router/index'
 
 Vue.use(Router)
 
-import { route_list } from "./api";
+import { get_route_menu_list } from "./api";
 
 let route = {
 	path : '/views',
 	name : 'views',
 	component : () => _imports('views'),
+	meta:{
+		label:'views'
+	},
 	children: [],
 	beforeEnter: (to, from, next) => {
+		// console.log(to, 'views')
 		next();
 	}
 }
+
+/* 默认路由 */
 const routesDefault = [
 	{
 		path : '/login',
 		name : 'Login',
-		component : () => _imports('user/login')
+		component : () => _imports('user/login'),
+		meta:{
+			label:'Login',
+			default:true
+		},
 	},
 	{
 		path : '/404',
 		name : 'found-404',
-		component : () => import(/* webpackChunkName: "utils" */ '@views/utils/404')
+		component : () => import(/* webpackChunkName: "utils" */ '@views/utils/404'),
+		meta:{
+			label:'404',
+			default:true
+		},
 	},
 ]
-
-const router = new Router({
-  // mode: 'history',
-  base : process.env.BASE_URL,
-	isAddRoutesMenu:false,
-	scrollBehavior (to, from, savedPosition) {
-		return { y: 0 }
-	},
-  routes : routesDefault.concat([route])
-})
 
 /*
 * 路由元
 * */
 function routeElement ( route ) {
   let rElement = route
-  rElement[ 'component' ] = () => _imports(route.location)
+  rElement[ 'component' ] = () => _imports(route.meta.location)
   return rElement
 }
 /*
@@ -53,7 +57,11 @@ let pushRouteList = []
 function pushRoute ( routes ) {
 	for ( let i = 0 ; i < routes.length ; i++ ) {
 		const listElement = routes[ i ];
-		if ( listElement.children ) {
+		if (
+			listElement.children
+			&& Array.isArray(listElement.children)
+			&& listElement.children.length > 0
+		) {
 			pushRoute(listElement.children)
 		} else if(listElement.path){
 			pushRouteList.push(routeElement(listElement))
@@ -68,79 +76,40 @@ function pushRoute ( routes ) {
 *
 * @pushRouteList 重新获取路由时清空全局数据
 * */
-function setAddRoutes () {
-	pushRouteList = []
-	let list = JSON.parse(localStorage.getItem('menu'))
-	let menuList = pushRoute(list)
-	let arr = []
-	route['children'].forEach((routes)=>{
-		arr.push(routes.name)
-	})
-	menuList.forEach((item)=>{
-		if(!arr.includes(item.name)){
-			route['children'] = [...route['children'], ...[item]]
-			router.addRoutes([route])
-		}
-	})
-	localStorage.setItem('menuList', JSON.stringify(route))
-}
 function setAddRoutesMenuList(){
-	if(!router.options.isAddRoutesMenu || !localStorage.getItem('menuList')){}
-	const menu = new Promise(( resolve ) => {
-		pushRouteList = []
-		route_list()
-			.then(res => {
-				let list = res.data
+	if(!router.options.isBusinessRoutesMenuAdd
+		|| !localStorage.getItem('menuList')
+	){
+		get_route_menu_list()
+			.then(res=>{
+				route['children'] = [...pushRoute(res.data)]
+				router.addRoutes([route])
+				router.options.isBusinessRoutesMenuAdd = true
+				localStorage.setItem('menuList', JSON.stringify(route))
 				localStorage.setItem('menu', JSON.stringify(res.data))
-				let menuList = pushRoute(list)
-				resolve(menuList)
 			})
-	})
-	menu.then(menus => {
-		route['children'] = [...menus]
-		router.options.isAddRoutesMenu = true
-		router.addRoutes([route])
-		localStorage.setItem('menuList', JSON.stringify(route))
-	})
-}
-//新添加的路由不能刷新， 因为mock接口中没有这条路由数据
-// setAddRoutesMenuList()
-/*
-* 比对本地数据，是否添加了路由
-* */
-function isExistRoutes(){
-	pushRouteList = []
-	let list = JSON.parse(localStorage.getItem('menu'))
-	let olist = route['children']
-	let menuList = pushRoute(list)
-	return menuList != olist ? true : false;
+	}
 }
 
+const router = new Router({
+	// mode: 'history',
+	base : process.env.BASE_URL,
+	isBusinessRoutesMenuAdd:false, //是否在主业务入口添加路由
+	scrollBehavior (to, from, savedPosition) {
+		return { y: 0 }
+	},
+	routes : routesDefault.concat(route),
+})
+setAddRoutesMenuList();
+
 router.beforeEach(( to, from, next ) => {
-	if(router.options.isAddRoutesMenu){
-		if(isExistRoutes()){
-			setAddRoutes()
-			if(to.name == null ){
-				next('/404')
-			}else {
-				next()
-			}
+	if(to.matched.some(record => record.meta.default)){
+		next()
+	}else {
+		if(router.options.isBusinessRoutesMenuAdd){
+			next()
 		}else {
-			//登录中 访问页面不存在
-			if ( localStorage.getItem('register') && to.name == null ) {
-			  next('/404')
-			}else if(!localStorage.getItem('register') && to.name != 'Login'){
-				next('/login')
-			}else {
-				next()
-			}
-		}
-	}else{
-		setAddRoutesMenuList()
-		console.log(router, 'before false')
-		if(to.path === '/'){
-			next('/login')
-		}else {
+			if(to.path === '/') next('/login')
 			next()
 		}
 	}

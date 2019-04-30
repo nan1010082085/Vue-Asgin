@@ -54,14 +54,44 @@ function resize (callback) {
 	}, false)
 }
 
+/**
+ * 正则
+ * @isHanzi regexp 验证是否是汉字
+ * **/
 function isHanzi (str) {
 	let reg = /^[\u4e00-\u9fa5]+$/
   return !reg.test(str)
+}
+
+/**
+ * 获取对应跳转路由
+ * @path 识别路由path
+ * **/
+function getRouteItem (path) {
+	return JSON.parse(localStorage.getItem('menuList')).children.filter(item=> item.path == path)[0]
+}
+
+/**
+ * 跳转 tabs
+ * @router 路由对象 --> 用于跳转页面
+ * @tabs  快捷tabs标识名称 --> 用于识别当前选中路由
+ * @query 路由参数
+ * @callback 回调函数 -- 返回匹配的tabs路由信息和路由
+ * **/
+function goTabsRoute (router, tabs, query, callback) {
+	let route = getRouteItem(tabs);
+	let menu = Object.assign({}, route, {query:query})
+	if(typeof callback === 'function'){
+		callback(menu, route)
+	}
+	router.push({ name:route.name,query:query })
 }
 
 export {
 	isLocalStorageSupported,
 	sendCode,
 	resize,
-	isHanzi
+	isHanzi,
+	getRouteItem,
+	goTabsRoute
 }

@@ -5,10 +5,12 @@
 					@tab-click="handleClick"
 					@tab-remove="handleRemove"
 					closable>
-			<TabPane v-for="(r, i) in tabsList" :key="r.label"
-							 :label="r.label"
-							 :name="r.path"
-			></TabPane>
+			<TabPane
+							 v-for="(tbs, i) in tabsList" :key="tbs.path"
+							 :label="tbs.meta.label"
+							 :name="tbs.path"
+			>
+			</TabPane>
 		</Tabs>
 	</div>
 </template>
@@ -21,7 +23,7 @@
 	import { mapMutations, mapState } from 'vuex'
 
 	export default {
-		name: 'vRouter',
+		name: 'vTabs',
 		data () {
 			return {
 				activeName: '',
@@ -33,7 +35,7 @@
 			...mapState({
 				tabsList: state => state.layout.tabsList,
 				activeTabs: state => state.layout.activeTabs,
-				vNavStyle: state => state.layout.navStyle
+				// vNavStyle: state => state.layout.navStyle
 			})
 		},
 		watch: {
@@ -42,7 +44,10 @@
 				deep: true,
 				immediate: true
 			},
-			'activeTabs': 'getTabs'
+			'activeTabs':{
+				handler: 'getTabs',
+				immediate:true
+			}
 		},
 		methods: {
 			...mapMutations([
@@ -53,7 +58,8 @@
 			]),
 			handleClick (evt) {
 				this.menuList.forEach((item) => {
-					if (item.path === evt.name) {
+					console.log(item)
+					if (item.path === evt.name.toLocaleLowerCase()) {
 						this.setActiveMenu({ menu: `${item.parentId}-${item.path}`, tabs: item.path })
 						this.$router.push({ name: item.name, query: item.query })
 						return false

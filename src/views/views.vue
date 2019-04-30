@@ -40,8 +40,10 @@
 	}
 	.main-default{
 		width: 100%;
+		height: calc(100% - 60px);
 		.main-route-view{
 			width: calc(100% - 1px);
+			height: inherit;
 			transition: none;
 		}
 	}

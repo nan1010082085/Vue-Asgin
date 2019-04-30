@@ -22,6 +22,6 @@ export default new Vuex.Store({
 		layout
 	},
 	plugins:[
-    // createPersistedState({ storage: window.localStorage })
+    createPersistedState({ storage: window.localStorage })
   ],
 })

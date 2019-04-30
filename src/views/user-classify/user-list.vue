@@ -1,9 +1,6 @@
 <template>
-	<div>测试</div>
-</template>
-<style scoped lang="less">
 
-</style>
+</template>
 <script>
 	export default {
 		components: {},
@@ -36,3 +33,6 @@
 		//} 
 	}
 </script>
+<style scoped lang="less">
+
+</style>

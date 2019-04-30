@@ -1,5 +1,7 @@
 import axios from 'axios'
 import {isLocalStorageSupported} from '../utils'
+const devUrl  = 'http://' + '192.168.2.26' + ':3030/'
+const prodUrl  = 'http://' + '192.168.2.26' + ':3030/'
 
 //获取请求头 token
 function token () {
@@ -26,7 +28,7 @@ axios.defaults.headers.post[ 'Content-Type' ] = 'application/x-www-form-urlencod
 	
 	axios.interceptors.response.use(function (response) {
 		// console.log(response);
-		return response;
+		return response.data;
 	}, function (error) {
 		if(error.response){
 			if(error.response.status == 401){
@@ -68,7 +70,7 @@ function post (url,params,query) {
 	if(token() != ''){
 		// axios.defaults.headers.Authorization  = 'Bearer ' + token();
 	}
-	if(typeof data == 'object'){
+	if(typeof params == 'object'){
 		params['timestamp'] = timesamp
 	}else {
 		params = {
@@ -84,6 +86,8 @@ function post (url,params,query) {
 }
 
 export {
+	devUrl,
+	prodUrl,
 	get,
 	post
 }
