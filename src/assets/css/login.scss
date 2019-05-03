@@ -1,11 +1,11 @@
 @charset "UTF-8";
-@import "./style";
+@import "./variables";
 
 .login{
 	position: relative;
 	width: 100vw;
 	height: 100vh;
-	background:  url("../image/login.jpg")no-repeat center;
+	background: url("../../assets/image/login.jpg")no-repeat center;;
 	background-size: 100% 100%;
 	overflow: auto;
 }

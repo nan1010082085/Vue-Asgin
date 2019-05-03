@@ -1,5 +1,5 @@
 <template>
-	<div class="setting">
+	<div class="main-container-warp">
 		<section class="main-btn ptb5">
 			<Button type="primary" size="small" @click="goSettingAddMenu">添加导航</Button>
 		</section>
@@ -42,8 +42,8 @@
 		</Table>
 	</div>
 </template>
-<style scoped lang="less">
-	.setting{
+<style scoped lang="scss">
+	.main-container-warp{
 		padding: 10px;
 		width: auto;
 		height: 100%;
@@ -122,11 +122,11 @@
 				})
 			},
 			handleEdit(row){
-				goTabsRoute(this.$router, 'add-menu-item', {id:row.id, status:'edit'}, (menu, route)=>{
-					console.log(menu)
-					this.setMenuList(menu)
-					this.setActiveTabs({tabs: route.path})
-				})
+				// goTabsRoute(this.$router, 'add-menu-item', {id:row.id, status:'edit'}, (menu, route)=>{
+				// 	console.log(menu)
+				// 	this.setMenuList(menu)
+				// 	this.setActiveTabs({tabs: route.path})
+				// })
 			}
 		},
     mounted () {

@@ -14,8 +14,8 @@
 		</div>
 	</div>
 </template>
-<style scoped lang="less">
-	@import "../assets/css/style";
+<style scoped lang="scss">
+	@import "../../assets/css/variables";
 	.nav{
 		width: inherit;
 		display: flex;
@@ -34,13 +34,13 @@
 		height: 60px;
 		line-height: 60px;
 		text-align: center;
-		font-size: @fz20;
+		font-size: $fz20;
 	}
 </style>
 <script>
-	import LMenu from './l-menu'
+	import LMenu          from './l-menu'
 	import LHeaderContent from './l-hedaer-content'
-	import {mapState} from 'vuex'
+	import {mapState}     from 'vuex'
 	export default {
 		components: {LMenu,LHeaderContent},
 		mixins: [],

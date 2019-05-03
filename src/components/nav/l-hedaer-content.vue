@@ -24,7 +24,7 @@
 			width="400"
 			trigger="hover">
 			<div class="content--popover-warp">
-				<img  style="width: 60px;height: 60px;" src="../assets/image/head.jpg" alt="head"/>
+				<img style="width: 60px;height: 60px;" src="../../assets/image/head.jpg" alt="head"/>
 				<Form class="card" label-width="80px" label-position="left">
 					<FormItem label="昵称:">
 						<div class="item-ctn">{{roleForm.name}}</div>
@@ -37,12 +37,12 @@
 					</FormItem>
 				</Form>
 			</div>
-			<img slot="reference" @click="visible = true" class="head-image" src="../assets/image/head.jpg" alt="head"/>
+			<img slot="reference" @click="visible = true" class="head-image" src="../../assets/image/head.jpg" alt="head"/>
 		</Popover>
 	</div>
 </template>
-<style scoped lang="less">
-	@import "../assets/css/style";
+<style scoped lang="scss">
+	@import "../../assets/css/variables";
 
 	:host{
 		height: inherit;

@@ -45,8 +45,8 @@
 						@click="handleSetting"></Button>
 	</div>
 </template>
-<style scoped lang="less">
-	@import "../assets/css/style";
+<style scoped lang="scss">
+	@import "../../assets/css/variables";
 
 	.header {
 		position: relative;
@@ -59,13 +59,13 @@
 	.as-header {
 		padding-right: 0;
 		width: calc(100% - 50px);
-		font-size: @as-default-fz;
+		font-size: $as-default-fz;
 		line-height: 60px;
 
 		.as-header-content {
 			display: flex;
 			height: 100%;
-			font-size: @fz14;
+			font-size: $fz14;
 			align-items: center;
 			justify-content: flex-end;
 		}
@@ -74,7 +74,7 @@
 	//pattern 2
 	.as-pattern-header {
 		width: inherit;
-		font-size: @as-default-fz;
+		font-size: $as-default-fz;
 		line-height: 60px;
 	}
 
@@ -96,7 +96,7 @@
 <script>
 	import HNav           from './h-nav'
 	import LHeaderContent from './l-hedaer-content'
-	import { resize }     from '../utils'
+	import { resize }     from '../../utils'
 	import { mapState }   from 'vuex'
 	export default {
 		components: { HNav, LHeaderContent },

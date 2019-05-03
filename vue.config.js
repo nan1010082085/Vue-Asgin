@@ -3,9 +3,10 @@
 * 2019年4月15日 16:23:44
 * author [nan1010082085]
 * */
+const path = require('path')
+const webpackProvideGlobalPlugin  =  require('webpack-provide-global-plugin')
 //route
 require('./config')
-
 module.exports = {
 	//部署应用的基本url  可用 process.env.NODE_ENV 环境变量控制
 	publicPath : './',
@@ -29,8 +30,9 @@ module.exports = {
 		config.resolve
 		      .alias
 		      .merge({
-			      '@views' : '@/views',
-			      '@component' : '@/components'
+			      '@api' : path.resolve(__dirname, '../../src/api'),
+			      '@views' : path.resolve(__dirname, '../../src/views'),
+			      '@component' : path.resolve(__dirname, '../../src/component')
 		      }).end()
 	},
 	//这个值是一个对象，则会通过 webpack-merge 合并到最终的配置中。
@@ -38,7 +40,13 @@ module.exports = {
 		performance : {
 			hints : false
 		},
-		plugins : []
+		plugins : [
+		  //兼容jquery第三方插件使用
+      new webpackProvideGlobalPlugin({
+        $: 'jquery',
+        jQuery: 'jquery'
+      })
+    ]
 	},
 	//是否使用包含运行时编译器的 Vue 构建版本
 	//设置为 true 后你就可以在 Vue 组件中使用 template 选项了，但是这会让你的应用额外增加 10kb 左右。
@@ -51,12 +59,7 @@ module.exports = {
 		// 开启 CSS source maps?
 		sourceMap : false,
 		// css预设器配置项
-		loaderOptions : {
-			less : {
-				test : /\.less$/,
-				loader : "style-loader!css-loader!less-loader"
-			}
-		},
+		loaderOptions : {},
 		// 启用 CSS modules for all css / pre-processor files.
 		modules : false
 	},

@@ -14,7 +14,7 @@
 		</Tabs>
 	</div>
 </template>
-<style scoped lang="less">
+<style scoped lang="scss">
 	.v-router {
 		width: 100%;
 	}

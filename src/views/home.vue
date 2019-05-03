@@ -1,12 +1,9 @@
 <template>
-	<div>404</div>
+	<div>首页 初始数据统计页</div>
 </template>
-<style scoped lang="scss">
-
-</style>
 <script>
-	export default {
-		components: {},
+  export default {
+    components: {},
 		mixins: [],
 		name: '',
 		data () {
@@ -21,18 +18,16 @@
 		filters: {},
 		directives: {},
 		//keep-alive
-		activated () {
-			//激活
-		},
-		deactivated () {
-			//停用
-		},
-		beforeDestroy () {
-			//实例被销毁前
-		},
+		activated () {},
+		deactivated () {},
+		//实例销毁
+		beforeDestroy () {},
 		destroyed () {}
-		//route leave
+		//router
 		//beforeRouteLeave ( to, from, next ) {
 		//} 
-	}
+  }
 </script>
+<style scoped lang="less">
+
+</style>

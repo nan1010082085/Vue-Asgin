@@ -3,20 +3,27 @@ import Router   from 'vue-router'
 import _imports from './router/index'
 
 Vue.use(Router)
+import { get_route_menu_list } from "./api/sys";
 
-import { get_route_menu_list } from "./api";
+const component = (file) => {
+  return process.env.VUE_APP_NODESHL === 'PORD' ? () => _imports(file) : _imports(file)
+}
 
 let route = {
 	path : '/views',
 	name : 'views',
-	component : () => _imports('views'),
+	component : component('views'),
 	meta:{
 		label:'views'
 	},
 	children: [],
 	beforeEnter: (to, from, next) => {
 		// console.log(to, 'views')
-		next();
+    if(to.name == 'views'){
+      next({name:'home'})
+    }else {
+      next();
+    }
 	}
 }
 
@@ -25,18 +32,9 @@ const routesDefault = [
 	{
 		path : '/login',
 		name : 'Login',
-		component : () => _imports('user/login'),
+		component : component('user/login'),
 		meta:{
 			label:'Login',
-			default:true
-		},
-	},
-	{
-		path : '/404',
-		name : 'found-404',
-		component : () => import(/* webpackChunkName: "utils" */ '@views/utils/404'),
-		meta:{
-			label:'404',
 			default:true
 		},
 	},
@@ -47,7 +45,7 @@ const routesDefault = [
 * */
 function routeElement ( route ) {
   let rElement = route
-  rElement[ 'component' ] = () => _imports(route.meta.location)
+  rElement[ 'component' ] = component(route.meta.location)
   return rElement
 }
 /*
@@ -82,6 +80,17 @@ function setAddRoutesMenuList(){
 	){
 		get_route_menu_list()
 			.then(res=>{
+			  //生产中不显示菜单设置
+        if(process.env.VUE_APP_NODESHL === 'PORD'){
+          res.data = res.data.map((menu)=>{
+            if(menu.meta.label === '菜单设置')
+            {
+              menu.meta.isShow = false;
+              return menu;
+            }
+          })
+        }
+			  
 				route['children'] = [...pushRoute(res.data)]
 				router.addRoutes([route])
 				router.options.isBusinessRoutesMenuAdd = true
@@ -103,7 +112,8 @@ const router = new Router({
 setAddRoutesMenuList();
 
 router.beforeEach(( to, from, next ) => {
-	if(to.matched.some(record => record.meta.default)){
+  console.log(to);
+  if(to.matched.some(record => record.meta.default)){
 		next()
 	}else {
 		if(router.options.isBusinessRoutesMenuAdd){

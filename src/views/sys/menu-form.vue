@@ -62,6 +62,6 @@
 		},
 	}
 </script>
-<style scoped lang="less">
+<style scoped lang="scss">
 	@import "../../assets/css/menu-form";
 </style>

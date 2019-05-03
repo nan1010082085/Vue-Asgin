@@ -19,23 +19,23 @@
 		</Aside>
 	</div>
 </template>
-<style scoped lang="less">
-	@import "../assets/css/style";
+<style scoped lang="scss">
+	@import "../../assets/css/variables";
 	.nav {
 		width: 200px;
 	}
 	i[class^=el-icon-]{
-		color: @text-color !important;
+		color: #fff !important;
 	}
 	.nav-header {
 		height: 60px;
 		line-height: 60px;
 		text-align: center;
-		font-size: @fz20;
+		font-size: $fz20;
 	}
 </style>
 <script>
-	import LMenu from './l-menu'
+	import LMenu      from './l-menu'
 	import {mapState} from 'vuex'
 	export default {
 		components: {LMenu},

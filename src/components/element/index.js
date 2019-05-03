@@ -145,3 +145,5 @@ Vue.prototype.$notify = Notification;
 Vue.prototype.$message = Message;
 
 Vue.prototype.$ELEMENT = { size: 'small' };
+
+import '../../assets/css/theme.scss'

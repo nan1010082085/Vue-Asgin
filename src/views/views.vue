@@ -14,7 +14,7 @@
 				{'main-justify' : pattern == 2 || mainJustify}
 			]">
 				<!--动态路由标签-->
-				<VTabs></VTabs>
+				<VTabs v-if="isTabs"></VTabs>
 				<!--页面内容-->
 				<div class="main-route-view plr10">
 					<router-view></router-view>
@@ -27,8 +27,8 @@
 		</div>
 	</Container>
 </template>
-<style scoped lang="less">
-	@import "../assets/css/style";
+<style scoped lang="scss">
+	@import "~@/assets/css/variables";
 	.as-views{
 		position: relative;
 	}
@@ -53,10 +53,10 @@
 	}
 </style>
 <script>
-	import LHeader from '../components/l-header'
-	import LNav from '../components/l-nav'
-	import Control from '../components/control'
-	import VTabs from '../components/v-tabs'
+	import LHeader                  from '../components/nav/l-header'
+	import LNav                     from '../components/nav/l-nav'
+	import Control                  from '../components/nav/control'
+	import VTabs                    from '../components/nav/v-tabs'
 	import {mapState, mapMutations} from 'vuex'
 	export default {
 		components: {LHeader,LNav,Control,VTabs},
@@ -64,7 +64,8 @@
 		name: 'views',
 		data () {
 			return {
-        showControl:false
+        showControl:false,
+        isTabs:false,
 			}
 		},
 		props: {},
@@ -76,14 +77,19 @@
 				mainJustify: state => state.layout.mainJustify,
 			})
 		},
-		watch: {},
-		created () {},
-		mounted () {
-			// this.$router.push({name:'views'})
+		watch: {
+		  '$route':{
+		    handler:'handleRoute',
+				deep:true,
+				immediate:true
+			},
 		},
+		created () {},
+		mounted () {},
 		methods: {
 			...mapMutations([
-				'setLayout'
+				'setLayout',
+				'setActiveMenu'
 			]),
       showSetting(){
         this.showControl = true
@@ -95,13 +101,19 @@
 			  this.handleHideControl()
         this.setLayout(layout)
 			  const loading = this.$loading({
-          // spinner: 'el-icon-loading',
-          // text:'加载中...',
+          spinner: 'el-icon-loading',
+          text:'加载中...',
           background:'rgba(0,0,0,.35)'
 				})
 				setTimeout(()=>{
 					loading.close()
 				}, 500)
+			},
+      handleRoute(to){
+			  if(to.name == 'home'){
+          this.setActiveMenu({ menu: 'home', tabs: '' })
+      	}
+				this.isTabs = !(to.name == 'home')
 			},
 		},
 		filters: {},

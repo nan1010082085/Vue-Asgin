@@ -1,5 +1,5 @@
 @charset "UTF-8";
-@import "./style";
+@import "./variables";
 /* scrollbar */
 ::-webkit-scrollbar { /*滚动条整体样式*/
 	width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
@@ -20,23 +20,23 @@
 
 /*  font-size */
 .fz12 {
-	font-size: @fz12;
+	font-size: $fz12;
 }
 
 .fz14 {
-	font-size: @fz14;
+	font-size: $fz14;
 }
 
 .fz16 {
-	font-size: @fz16;
+	font-size: $fz16;
 }
 
 .fz18 {
-	font-size: @fz18;
+	font-size: $fz18;
 }
 
 .fz20 {
-	font-size: @fz20;
+	font-size: $fz20;
 }
 
 /* padding */
@@ -209,4 +209,15 @@
 	 .el-form-item__label {
 		line-height: 1.15;
 	}
+}
+
+
+/* container-warp */
+.main-container-warp{
+	padding: 10px;
+	width: auto;
+	height: 100%;
+	background-color: #ffff;
+	border-radius: 8px;
+	box-sizing: border-box;
 }

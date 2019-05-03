@@ -12,4 +12,4 @@ const usersData = function () {
   return users
 }
 
-Mock.mock('/users/index', 'post', usersData)
+Mock.mock('/mock/users/index', 'post', usersData)

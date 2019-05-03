@@ -87,9 +87,10 @@
 		</Form>
 	</div>
 </template>
-<style scoped lang="less">
+<style scoped lang="scss">
 	.control-fixed {
 		position: absolute;
+		z-index: 7777;
 		top: 60px;
 		width: 300px;
 		height: calc(100% - 60px);
@@ -180,7 +181,7 @@
 	}
 </style>
 <script>
-  import * as theme   from '../assets/theme'
+  import * as theme   from '../../assets/theme'
   import { mapState } from 'vuex'
 
   export default {

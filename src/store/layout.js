@@ -12,7 +12,6 @@ const state = {
 	activeMenu: '',
 	activeTabs:'',
 	closeRouterName:'',  //关闭tabs 后自动跳转的路由
-	isAddMenu : false, //更新menu
 }
 
 const mutations = {
@@ -80,18 +79,11 @@ const mutations = {
 	closeTabs(state){
 		state.activeTabs = ''
 	},
-	isAddMenu(state, bool){
-		state.isAddMenu = bool
-		setTimeout(()=>{
-			state.isAddMenu = false
-		},300)
-	},
 	clear(state){
 		state.tabsList = []
 		state.activeMenu = ''
 		state.activeTabs = ''
 		state.closeRouterName = ''
-		state.isAddMenu = false
 	}
 }
 

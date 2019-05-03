@@ -1,5 +1,5 @@
 <template>
-	<div class="add-menu-form">
+	<div class="main-container-warp">
 		<Tabs tab-position="left">
 			<TabPane label="添加菜单">
 				<vMenuForm></vMenuForm>
@@ -31,13 +31,5 @@
 		filters: {},
 	}
 </script>
-<style scoped lang="less">
-	.add-menu-form{
-		width: 100%;
-		height: 100%;
-		padding: 20px 20px 0 20px;
-		border-radius: 8px;
-		box-sizing: border-box;
-		background-color: #fff;
-	}
+<style scoped lang="scss">
 </style>

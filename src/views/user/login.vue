@@ -37,6 +37,7 @@
 				<FormItem label="验证码" prop="code">
 					<Input class="form-login-inp-code" size="small" v-model="loginForm.code" placeholder="验证码" />
 					<VIdentify class="code-btn-img"
+										 :font-size-min="28"
 										 :contentWidth="100"
 										 :contentHeight="32"
 										 :identifyCode="identifyCode" @click.native="resetCode"></VIdentify>
@@ -79,12 +80,12 @@
 		</div>
 	</div>
 </template>
-<style scoped lang="less">
-	@import "../../assets/css/login";
+<style scoped lang="scss">
+	@import "~@/assets/css/login";
 </style>
 <script>
 	import { sendCode,resize } from '../../utils'
-	import {login_hick} from '../../api'
+	import {login_hick} from '../../api/login'
 	import {mapMutations} from 'vuex'
 	import VIdentify from '../../components/identify'
 	export default {
@@ -118,8 +119,8 @@
 				codeNumber: '获取验证码',
 				rapid: false, //是否是快捷登录 true 快捷 false
 				loginForm: {
-					phone: 'admin',
-					pass: 'admin',
+					phone: '',
+					pass: '',
 					code: ''
 				},
 				loginFormRap:{
@@ -160,8 +161,9 @@
 			this.identifyCode = this.randomCode()
 			if(localStorage.getItem('username')){
 				this.loginForm.phone = localStorage.getItem('username')
+				this.loginForm.pass = localStorage.getItem('password')
 				this.userNameCheck = true
-			}
+    }
 		},
 		mounted () {
 			this.clear()

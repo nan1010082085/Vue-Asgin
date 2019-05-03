@@ -14,8 +14,8 @@ import VueParticles from 'vue-particles'
 Vue.use(VueParticles)
 
 /* reset public css */
-import './assets/css/reset.less'
-import './assets/css/public.less'
+import './assets/css/reset.scss'
+import './assets/css/public.scss'
 
 /* devtools */
 Vue.config.productionTip = false

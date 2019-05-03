@@ -10,7 +10,7 @@
 						:default-active="getActiveIndex">
 				<Submenu :style="pattern == 2 ? 'width: auto;':'width: 200px;'"
 								 :index="`${menu._id}`"
-								 v-if="menu.children"
+								 v-if="menu.meta.isShow"
 								 v-for="(menu,index) in getMenuList" :key="index">
 					<template slot="title">
 						<i :class="[menu.meta.icon]"></i>
@@ -18,20 +18,23 @@
 					</template>
 					<MenuItem :index="`${menu._id}-${item.path}`"
 										v-if="item.meta.isShow"
-										v-for="(item,jItems) in menu.children" :key="jItems"
+										v-for="(item,jItems) in menu.children" :key="item.meta.isShow"
 										@click="handleChange(item, `${menu._id}-${item.path}`, item.path)">
 						<i :class="[item.meta.icon]"></i>
 						{{item.meta.label}}
 					</MenuItem>
 				</Submenu>
-				<MenuItem :index="`${menu._id}`"
-									v-if="!menu.children&&menu.meta.isShow"
-									v-for="(menu,index) in getMenuList" :key="index">
+				<MenuItem :style="pattern == 2 ? 'width: auto;':'width: 200px;'"
+									:index="`${menu.path}`"
+									v-if="!menu.meta.isShow"
+									v-for="(menu,index) in getMenuList" :key="menu.meta.label"
+									@click="handleRoute(menu, menu.path, '')">
 					<i :class="[menu.meta.icon]"></i>
-					{{item.meta.label}}
+					{{menu.meta.label}}
 				</MenuItem>
 			</Menu>
 		</div>
+		<!--顶部导航 侧边按钮弹出-->
 		<div v-else class="sidebar-menu"
 				 :class="{'sidebar-menu-show': visible}"
 				 :style="{'background-color' : navStyle.backgroundColor}">
@@ -45,31 +48,33 @@
 						router>
 				<Submenu :style="pattern == 2 && isShowMenu ? 'width: auto;':'width: 200px;'"
 								 :index="`${menu._id}`"
-								 v-if="menu.children"
-								 v-for="(menu,index) in getMenuList" :key="index">
+								 v-for="(menu,index) in getMenuList" :key="menu.meta.label"
+								 v-if="menu.meta.isShow">
 					<template slot="title">
 						<i :class="[menu.meta.icon]"></i>
 						{{menu.meta.label}}
 					</template>
 					<MenuItem :index="`${menu._id}-${item.path}`"
-										v-if="item.isShow"
-										v-for="(item,jItems) in menu.children" :key="jItems"
+										v-if="item.meta.isShow"
+										v-for="(item,jItems) in menu.children" :key="item.meta.label"
 										@click="handleChange(item, `${menu._id}-${item.path}`, item.path)">
 						<i :class="[item.meta.icon]"></i>
 						{{item.meta.label}}
 					</MenuItem>
 				</Submenu>
-				<MenuItem :index="`${menu._id}`"
-									v-if="!menu.children&&menu.meta.isShow"
-									v-for="(menu,index) in getMenuList" :key="index">
+				<MenuItem :style="pattern == 2 && isShowMenu ? 'width: auto;':'width: 200px;'"
+									:index="`${menu.path}`"
+									v-if="!menu.meta.isShow"
+									v-for="(menu,index) in getMenuList" :key="menu.meta.label"
+									@click="handleRoute(menu, menu.path, '')">
 					<i :class="[menu.meta.icon]"></i>
-					{{item.meta.label}}
+					{{menu.meta.label}}
 				</MenuItem>
 			</Menu>
 		</div>
 	</div>
 </template>
-<style scoped lang="less">
+<style scoped lang="scss">
 	.l-menu {
 		/*width: 100%;*/
 	}
@@ -113,7 +118,6 @@
 				pattern: state => state.layout.pattern,
 				navStyle: state => state.layout.navStyle,
 				activeMenu: state => state.layout.activeMenu,
-				isAddMenu: state => state.layout.isAddMenu,
 				closeRouterName: state => state.layout.closeRouterName,
 			}),
 			getActiveIndex: {
@@ -125,7 +129,7 @@
 				get () {
 					return this.menuList
 				}
-			}
+			},
 		},
 		watch: {
 			activeIndex: {
@@ -140,8 +144,7 @@
 			},
 			menuList: {
 				handler :'initMenuList'
-			},
-			isAddMenu: 'updateData'
+			}
 		},
 		created () {
 			this.getData()
@@ -154,11 +157,6 @@
 			]),
 			getData () {
 				this.menuList = JSON.parse(localStorage.getItem('menu'))
-			},
-			updateData (bool) {
-				if (bool) {
-					this.menuList = JSON.parse(localStorage.getItem('menu'))
-				}
 			},
 			initMenuList(list){
 				/*
@@ -183,7 +181,12 @@
 				menuItem[ 'query' ] = this.$route.query
 				this.setMenuList(menuItem)
 				this.$router.push({ name: menuItem.name, query: this.$route.query })
-			}
+			},
+			/* 一级导航跳转 */
+      handleRoute(menu, index, tabs){
+        this.setActiveMenu({ menu: index, tabs: tabs })
+        this.$router.push({name:menu.name})
+			},
 		},
 		filters: {}
 	}
