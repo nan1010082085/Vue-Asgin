@@ -3,7 +3,8 @@
 		<Row>商品订单列表</Row>
 		<Table
 			:data="tableData"
-			border>
+			style="width: 100%;"
+		  border>
 			<TableColumn
 				fixed
 				prop="orderId"

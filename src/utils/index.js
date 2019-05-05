@@ -68,7 +68,7 @@ function isHanzi (str) {
  * @path 识别路由path
  * **/
 function getRouteItem (path) {
-	return JSON.parse(localStorage.getItem('menuList')).children.filter(item=> item.path == path)[0]
+	return JSON.parse(sessionStorage.getItem('menuList')).children.filter(item=> item.path == path)[0]
 }
 
 /**

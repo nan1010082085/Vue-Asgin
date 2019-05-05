@@ -9,7 +9,7 @@ const Url = config.Base_URL
 const instance = axios.create({
   // baseURL : config.Base_URL,
   timeout : 5000,
-  headers : { 'Content-Type' : 'application/x-www-form-urlencoded;charset=UTF-8' }
+  headers : { 'Content-Type' : 'application/json;charset=UTF-8' }
 })
 
 //获取请求头 token

@@ -4,24 +4,22 @@
 
 		</Row>
 		<Table
-			:data="tableData"
-			border>
+			:data="tableData" style="width: 100%;" border>
 			<TableColumn
 				fixed
 				prop="userId"
 				label="用户编号"
-				min-width="150">
+				min-width="100">
 			</TableColumn>
 			<TableColumn
-				fixed
 				prop="userName"
 				label="用户名称"
-				min-width="150">
+				min-width="100">
 			</TableColumn>
 			<TableColumn
 				prop="userPhone"
 				label="手机号"
-				min-width="200">
+				min-width="150">
 			</TableColumn>
 			<TableColumn
 				prop="userClass"
@@ -36,7 +34,7 @@
 			<TableColumn
 				prop="userStatus"
 				label="用户状态"
-				min-width="150">
+				min-width="100">
 			</TableColumn>
 			<TableColumn
 				fixed="right"

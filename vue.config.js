@@ -7,6 +7,7 @@ const path = require('path')
 const webpackProvideGlobalPlugin  =  require('webpack-provide-global-plugin')
 //route
 require('./config')
+
 module.exports = {
 	//部署应用的基本url  可用 process.env.NODE_ENV 环境变量控制
 	publicPath : './',

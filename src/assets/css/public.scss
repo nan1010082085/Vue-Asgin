@@ -182,11 +182,12 @@
 .header-fixed-min-width {
 	width: 100%;
 }
-
+.as-views-container-width{
+	width: calc(100vw - 200px)!important;
+}
 .as-views-container-header-fixed {
 	padding-top: 60px;
 }
-
 .as-views-container-fixed-nav {
 	padding-left: 200px;
 }
@@ -215,7 +216,6 @@
 /* container-warp */
 .main-container-warp{
 	padding: 10px;
-	width: auto;
 	height: 100%;
 	background-color: #ffff;
 	border-radius: 8px;

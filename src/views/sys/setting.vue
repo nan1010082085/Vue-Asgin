@@ -3,7 +3,7 @@
 		<section class="main-btn ptb5">
 			<Button type="primary" size="small" @click="goSettingAddMenu">添加导航</Button>
 		</section>
-		<Table :data="tabData" style="width: 100%;">
+		<Table :data="tabData" style="width: 100%;" border>
 			<TableColumn
 				prop="index"
 				label="等级"
@@ -32,7 +32,7 @@
 			></TableColumn>
 			<TableColumn
 				label="操作"
-				width="150"
+				width="180"
 			>
 				<template slot-scope="scope">
 					<Button type="primary" size="mini" @click="handleEdit(scope.row)">编辑</Button>
@@ -43,13 +43,6 @@
 	</div>
 </template>
 <style scoped lang="scss">
-	.main-container-warp{
-		padding: 10px;
-		width: auto;
-		height: 100%;
-		background-color: #ffff;
-		border-radius: 8px;
-	}
 	.main-btn{
 		text-align: right;
 	}
@@ -76,7 +69,7 @@
     		'setActiveTabs'
 			]),
     	init(){
-    		let menu = JSON.parse(localStorage.getItem('menu'));
+    		let menu = JSON.parse(sessionStorage.getItem('menu'));
     		let arr = [];
 				function setIndex (list,index) {
 					if(Object.prototype.toString.call(list) == '[object Object]'){

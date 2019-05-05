@@ -52,6 +52,7 @@
 		position: relative;
 		display: flex;
 		flex-direction: row;
+		width: 100%;
 		height: 60px;
 	}
 
@@ -118,7 +119,7 @@
 				navStyle: state => state.layout.navStyle
 			}),
 			widthPx () {
-				return this.pattern == 1 ? 800 : 1000
+				return this.pattern == 1 ? 1000 : 1300
 			}
 		},
 		watch: {},

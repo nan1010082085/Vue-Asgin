@@ -156,7 +156,7 @@
 				'setActiveMenu'
 			]),
 			getData () {
-				this.menuList = JSON.parse(localStorage.getItem('menu'))
+				this.menuList = JSON.parse(sessionStorage.getItem('menu'))
 			},
 			initMenuList(list){
 				/*

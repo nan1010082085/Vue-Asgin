@@ -1,6 +1,1 @@
-const _import = (file) => import(
-	/* webpackChunkName: "[request]" */
-	`../views/${file}.vue`
-	)
-
-export default _import
+module.exports = file => () => import(/* webpackChunkName: "[request]" */ `../views/${file}.vue`)

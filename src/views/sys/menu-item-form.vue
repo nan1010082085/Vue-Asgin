@@ -42,7 +42,8 @@
 	</Form>
 </template>
 <script>
-	import {add_route_menu_item} from '../../api/sys'
+	import { add_route_menu_item } from '../../api/sys'
+
 	export default {
 		components: {},
 		mixins: [],
@@ -58,32 +59,55 @@
 						label: '',
 						isShow: true
 					},
-					parentId:'',
+					parentId: ''
 				},
-				options:[],
+				options: []
 			}
 		},
 		props: {},
 		computed: {},
 		watch: {},
-		created () {},
+		created () {
+			console.log(this.$route)
+		},
 		mounted () {
 			this.getMenuOption()
 		},
 		methods: {
-			getMenuOption(){
-				this.options = JSON.parse(localStorage.getItem('menu')).filter(menu=> menu.meta.isShow)
+			reset () {
+				this.form = {
+					path: '',
+					name: '',
+					meta: {
+						icon: '',
+						location: '',
+						label: '',
+						isShow: true
+					},
+					parentId: ''
+				}
 			},
-			setMenuItem(){
+			getMenuOption () {
+				this.options = JSON.parse(sessionStorage.getItem('menu')).filter(menu => menu.meta.isShow)
+			},
+			setMenuItem () {
 				let params = this.form
 				add_route_menu_item(params)
-					.then(res=>{
-						if(res.code != 200) return this.$message.error(res.msg)
-						this.$message.success(res.msg)
-						this.$refs['form'].resetFields();
-						window.location.href = window.location.href;
+					.then(res => {
+						if (res.code != 200) {
+							return this.$message.error(res.msg)
+						} else {
+							console.log(this.$route)
+							this.reset()
+							this.$router.push({
+								name: this.$route.name,
+								query: { t: new Date().getTime() },
+								redirect: true
+							})
+							this.$message.success(res.msg)
+						}
 					})
-			},
+			}
 		},
 		filters: {},
 		directives: {},

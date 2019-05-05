@@ -21,7 +21,8 @@
 		>
 		</vue-particles>
 		<div class="form-warp">
-			<Form v-show="!rapid" class="form" ref="form" :model="loginForm" :rules="ruleForm" label-width="80px" label-position="left">
+			<Form v-show="!rapid" class="form" ref="form" :model="loginForm" :rules="ruleForm" label-width="80px"
+						label-position="left">
 				<Row class="form-header">
 					<Col :span="12"><h1>Vue Asgin</h1></Col>
 					<Col :span="12" class="tar" v-if="false">
@@ -29,13 +30,13 @@
 					</Col>
 				</Row>
 				<FormItem label="帐号" prop="phone">
-					<Input class="form-login-inp" size="small" v-model="loginForm.phone" placeholder="登录帐号" />
+					<Input class="form-login-inp" size="small" v-model="loginForm.phone" placeholder="登录帐号"/>
 				</FormItem>
 				<FormItem label="密码" prop="pass">
-					<Input class="form-login-inp" size="small" v-model="loginForm.pass" placeholder="登录密码" />
+					<Input class="form-login-inp" size="small" v-model="loginForm.pass" placeholder="登录密码"/>
 				</FormItem>
 				<FormItem label="验证码" prop="code">
-					<Input class="form-login-inp-code" size="small" v-model="loginForm.code" placeholder="验证码" />
+					<Input class="form-login-inp-code" size="small" v-model="loginForm.code" placeholder="验证码"/>
 					<VIdentify class="code-btn-img"
 										 :font-size-min="28"
 										 :contentWidth="100"
@@ -50,7 +51,8 @@
 				</FormItem>
 			</Form>
 			<!-- 快捷登录 -->
-			<Form v-show="rapid" class="form" ref="formRap" :model="loginFormRap" :rules="ruleFormRap" label-width="80px" label-position="left">
+			<Form v-show="rapid" class="form" ref="formRap" :model="loginFormRap" :rules="ruleFormRap" label-width="80px"
+						label-position="left">
 				<Row class="form-header">
 					<Col :span="12"><h1>Vue Asgin</h1></Col>
 					<Col :span="12" class="tar">
@@ -58,14 +60,15 @@
 					</Col>
 				</Row>
 				<FormItem label="手机号" prop="phoneRap">
-					<Input class="form-login-inp" v-model="loginFormRap.phoneRap" placeholder="请输入手机号" />
+					<Input class="form-login-inp" v-model="loginFormRap.phoneRap" placeholder="请输入手机号"/>
 				</FormItem>
 				<FormItem label="验证码" prop="codeRap">
-					<Input class="form-login-inp-code" v-model="loginFormRap.codeRap" placeholder="请输入手机验证码" />
+					<Input class="form-login-inp-code" v-model="loginFormRap.codeRap" placeholder="请输入手机验证码"/>
 					<Button class="code-btn" type="text"
 									:disabled="!/\D+/.test(codeNumber)"
 									@click="getCodePost(60)"
-					>{{codeNumber}}</Button>
+					>{{codeNumber}}
+					</Button>
 				</FormItem>
 				<FormItem prop="">
 					<Button class="form-submit" type="primary" @click="handleSubmit('formRap')">登录</Button>
@@ -84,37 +87,38 @@
 	@import "~@/assets/css/login";
 </style>
 <script>
-	import { sendCode,resize } from '../../utils'
-	import {login_hick} from '../../api/login'
-	import {mapMutations} from 'vuex'
-	import VIdentify from '../../components/identify'
+	import { resize, sendCode } from '../../utils'
+	import { login_hick }       from '../../api/login'
+	import { mapMutations }     from 'vuex'
+	import VIdentify            from '../../components/identify'
+
 	export default {
-		components: {'VIdentify':VIdentify},
+		components: { 'VIdentify': VIdentify },
 		mixins: [],
 		name: 'login',
 		data () {
 			//表单自定义校验
 			const validatePhone = (rule, value, callback) => {
 				if (!/^1[0-9]{10}$/.test(value)) {
-					callback(new Error('请输入手机号'));
-				}else if (!/^1[0-9]{10}$/.test(value)) {
-					callback(new Error('请输入正确的手机号'));
+					callback(new Error('请输入手机号'))
+				} else if (!/^1[0-9]{10}$/.test(value)) {
+					callback(new Error('请输入正确的手机号'))
 				} else {
-					callback();
+					callback()
 				}
-			};
+			}
 			const validateCode = (rule, value, callback) => {
 				if (value == '') {
-					callback(new Error('请输入图片验证码'));
-				}else if (value != this.identifyCode) {
-					callback(new Error('图片验证码错误'));
+					callback(new Error('请输入图片验证码'))
+				} else if (value != this.identifyCode) {
+					callback(new Error('图片验证码错误'))
 				} else {
-					callback();
+					callback()
 				}
-			};
+			}
 			return {
 				str: '',
-			  loading: '',
+				loading: '',
 				firstCode: true,
 				codeNumber: '获取验证码',
 				rapid: false, //是否是快捷登录 true 快捷 false
@@ -123,63 +127,67 @@
 					pass: '',
 					code: ''
 				},
-				loginFormRap:{
+				loginFormRap: {
 					phoneRap: '',
 					codeRap: ''
 				},
-				ruleForm:{
+				ruleForm: {
 					phone: [
-						{ required: true, message: '请输入登录帐号', trigger: 'blur' },
+						{ required: true, message: '请输入登录帐号', trigger: 'blur' }
 					],
 					pass: [
-						{ required: true, message: '请输入登录密码', trigger: 'blur' },
+						{ required: true, message: '请输入登录密码', trigger: 'blur' }
 					],
 					code: [
-						{ required: true,  validator: validateCode, trigger: 'blur' },
-					],
+						{ required: true, validator: validateCode, trigger: 'blur' }
+					]
 				},
-				ruleFormRap:{
+				ruleFormRap: {
 					phoneRap: [
-						{ validator: validatePhone, trigger : 'blur'}
+						{ validator: validatePhone, trigger: 'blur' }
 					],
 					codeRap: [
-						{ required: true, message: '请输入手机验证码', trigger: 'blur' },
-					],
+						{ required: true, message: '请输入手机验证码', trigger: 'blur' }
+					]
 				},
 
-
-				userNameCheck :false,
-				identifyCode:"5757"
+				userNameCheck: false,
+				identifyCode: '5757'
 			}
 		},
 		props: {},
 		computed: {},
 		watch: {
-			userNameCheck:'checkUsers'
+			userNameCheck: 'checkUsers',
+			loginForm:{
+				handler:'inputForm',
+				deep:true,
+				immediate:true
+			}
 		},
 		created () {
 			this.identifyCode = this.randomCode()
-			if(localStorage.getItem('username')){
+			if (localStorage.getItem('username')) {
 				this.loginForm.phone = localStorage.getItem('username')
 				this.loginForm.pass = localStorage.getItem('password')
 				this.userNameCheck = true
-    }
+			}
 		},
 		mounted () {
 			this.clear()
-			resize((r)=>{
+			resize((r) => {
 				try {
 					this.$refs[ 'particles' ].$el.style = 'width:100vw;height:100vh;'
-				}catch (e) {}
+				} catch (e) {}
 			})
 		},
 		methods: {
 			...mapMutations([
 				'clear'
 			]),
-			handleTigger(formName){
+			handleTigger (formName) {
 				this.rapid = !this.rapid
-				this.$refs[formName].resetFields();
+				this.$refs[ formName ].resetFields()
 			},
 			//验证码发送倒计时
 			getCodePost (code) {
@@ -197,67 +205,73 @@
 				})
 			},
 			//提交登录
-			handleSubmit(formName){
+			handleSubmit (formName) {
 				// console.log(this.$refs[ formName ])
 				localStorage.removeItem('register')
 				let params = {}
-				if(this.rapid){
-					params['phone'] = this.loginFormRap.phoneRap
-					params['code'] = this.loginFormRap.codeRap
-				}else{
-					params['phone'] = this.loginForm.phone
-					params['pass'] = this.loginForm.phone
-					params['code'] = this.loginForm.code
+				if (this.rapid) {
+					params[ 'phone' ] = this.loginFormRap.phoneRap
+					params[ 'code' ] = this.loginFormRap.codeRap
+				} else {
+					params[ 'phone' ] = this.loginForm.phone
+					params[ 'pass' ] = this.loginForm.phone
+					params[ 'code' ] = this.loginForm.code
 				}
 				console.log(params)
-				this.$refs[formName].validate((valid) => {
+				this.$refs[ formName ].validate((valid) => {
 					if (valid) {
-					  this.loading = this.$loading()
-            localStorage.removeItem('register');
+						this.loading = this.$loading()
+						localStorage.removeItem('register')
 						this.submit(params)
 					} else {
 						console.log(valid)
-						if(!params.code){
+						if (!params.code) {
 							return this.$message.error('请填写图片验证码')
 						}
 						this.$message.error('请完善登录信息')
-						return false;
+						return false
 					}
-				});
+				})
 			},
-			submit(params){
+			submit (params) {
 				login_hick(params)
-					.then(res=>{
+					.then(res => {
 						console.log(res)
-						setTimeout(()=>{
-					    this.loading.close()
-              localStorage.setItem('register', JSON.stringify(res))
-              this.$message.success('登录成功')
-              this.$router.push('/views')
-						},1000)
+						setTimeout(() => {
+							this.loading.close()
+							localStorage.setItem('register', JSON.stringify(res))
+							this.$message.success('登录成功')
+							this.$router.push('/views')
+						}, 1000)
 					})
 			},
 			//重置表单
-			handleReset(formName){
-				this.$refs[formName].resetFields();
+			handleReset (formName) {
+				this.$refs[ formName ].resetFields()
 			},
 			//记住我
-			checkUsers(iSCheck){
-				if(iSCheck){
-					localStorage.setItem('username',this.loginForm.phone)
-					localStorage.setItem('password',this.loginForm.pass)
-				}else {
+			checkUsers (iSCheck) {
+				if (iSCheck) {
+					localStorage.setItem('username', this.loginForm.phone)
+					localStorage.setItem('password', this.loginForm.pass)
+				} else {
 					localStorage.removeItem('username')
 					localStorage.removeItem('password')
 				}
 			},
-			randomCode(){
+			inputForm(row){
+				if(this.userNameCheck){
+					localStorage.setItem('username', row.phone)
+					localStorage.setItem('password', row.pass)
+				}
+			},
+			randomCode () {
 				return Math.random().toFixed(4).substr(2)
 			},
-			resetCode(){
+			resetCode () {
 				this.identifyCode = ''
-				this.identifyCode = this.randomCode();
-			},
+				this.identifyCode = this.randomCode()
+			}
 		},
 		filters: {},
 		directives: {},
