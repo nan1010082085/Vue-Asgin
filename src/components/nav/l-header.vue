@@ -8,6 +8,7 @@
 			 	'header-width': pattern == 1 && !fixedHeader || pattern == 2
 			 }
 			 ]">
+
 		<Header class="as-header"
 						:style="{'color' : navStyle.textColor}"
 						v-if="pattern == '1'">
@@ -20,21 +21,20 @@
 				 class="as-pattern-header"
 				 :class="{'header-top-width': pattern == 2}"
 				 :style="{'color' : navStyle.textColor}">
-			<HNav :is-show-menu="isShowMenu"
-						:is-show-search="isShowSearch"
+			<HNav :is-show-search="isShowSearch"
 						:is-show-click-menu="isShowClickMenu"></HNav>
 		</div>
 		<!-- 侧边导航 控制按钮-->
-		<div class="show-menu">
+		<div class="show-menu" v-if="pattern == 2">
 			<transition name="fade" mode="in-out">
-				<i v-if="isShowClickMenu&&!isShowMenu"
-					 class="el-icon-d-arrow-left"
+				<i v-if="isShowClickMenu&&!isShowSearch"
+					 class="el-icon-s-fold"
 					 :style="{'color' : navStyle.textColor}"
-					 @click="isShowClickMenu = !isShowClickMenu">菜单</i>
-				<i v-if="!isShowClickMenu&&!isShowMenu"
-					 class="el-icon-d-arrow-right"
+					 @click="isShowClickMenu = !isShowClickMenu"></i>
+				<i v-if="!isShowClickMenu&&!isShowSearch"
+					 class="el-icon-s-unfold"
 					 :style="{'color' : navStyle.textColor}"
-					 @click="isShowClickMenu = !isShowClickMenu">菜单</i>
+					 @click="isShowClickMenu = !isShowClickMenu"></i>
 			</transition>
 		</div>
 
@@ -88,10 +88,13 @@
 
 	.show-menu {
 		position: absolute;
-		left: 5px;
-		top: 25px;
+		left: 15px;
+		top: 20px;
 		z-index: 11;
 		cursor: pointer;
+		i{
+			font-size: 24px;
+		}
 	}
 </style>
 <script>
@@ -133,7 +136,7 @@
 		methods: {
 			init () {
 				this.isShowSearch = document.body.offsetWidth <= this.widthPx ? false : true
-				this.isShowClickMenu = this.isShowMenu = this.pattern == 2 && document.body.offsetWidth <= 750 ? false : true
+				this.isShowClickMenu = this.pattern == 2 && (document.body.offsetWidth <= this.widthPx ? false : true)
 			},
       handleSetting(){
 			  this.$emit('setting')

@@ -1,6 +1,6 @@
 <template>
 	<div class="main-container-warp mtb10">
-		<h2>简单示例G2图表使用</h2> <i class="intro">更多G2图表参考 -- </i><a class="intro-a" href="https://antv.alipay.com/zh-cn/g2/3.x/index.html" target="_blank">地址</a>
+		<h2>简单示例G2图表使用</h2> <i class="intro">更多G2图表参考 -- </i><a class="intro-a" href="https://antv.alipay.com/zh-cn/g2/3.x/index.html" target="_blank">@Antv/G2</a>
 		<Row>
 			<Col :span="12">
 				<h2>基础柱状图</h2>

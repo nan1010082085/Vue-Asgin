@@ -6,10 +6,10 @@
 				 	'color': navStyle.textColor
 				 }"
 				 :class="[{'nav-fixed-header': fixedHeader,'tar': isNavHeaderTar}]">
-			Vue Asgin
+			Vue Asgisn
 		</div>
 		<div class="h-nav-menu" :style="{'background-color' : navStyle.backgroundColor}">
-			<LMenu :visible="isShowClickMenu" :is-show-menu="isShowMenu"></LMenu>
+			<LMenu :visible="isShowClickMenu" :is-show-menu="isShowSearch"></LMenu>
 			<LHeaderContent :is-show-search="isShowSearch"></LHeaderContent>
 		</div>
 	</div>
@@ -46,13 +46,10 @@
 		mixins: [],
 		name: 'HNav',
 		data () {
-			return {
-				activeIndex:'',
-			}
+			return {}
 		},
 		props: {
 			isShowSearch:Boolean,
-			isShowMenu:Boolean,
 			isShowClickMenu: Boolean,
 		},
 		computed: {
@@ -62,7 +59,7 @@
         navStyle: state => state.layout.navStyle
       }),
 			isNavHeaderTar(){
-				return this.isShowClickMenu && !this.isShowMenu || !this.isShowClickMenu && !this.isShowMenu
+				return this.isShowClickMenu && !this.isShowSearch || !this.isShowClickMenu && !this.isShowSearch
 			},
 		},
 		watch: {},

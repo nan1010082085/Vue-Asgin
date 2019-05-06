@@ -28,6 +28,14 @@
 						<i :class="[menu.meta.icon]"></i>
 						{{menu.meta.label}}
 					</template>
+					<!-- 二级路由 -->
+					<MenuItem :index="`${menu._id}-${menu2.path}`"
+										v-if="menu2.meta.isShow&&menu2.name!=''"
+										v-for="(menu2,jItems) in menu.children" :key="jItems"
+										@click="handleChange(menu2, `${menu._id}-${menu2.path}`, menu2.path)">
+						<i :class="[menu2.meta.icon]"></i>
+						{{menu2.meta.label}}1
+					</MenuItem>
 					<!-- 二级菜单 -->
 					<Submenu :style="pattern == 2 ? 'width: auto;':'width: 200px;'"
 									 :index="`${menu._id}-${menu2._id}`"
@@ -35,25 +43,17 @@
 									 v-for="(menu2,menu2Index) in menu.children" :key="menu2Index">
 						<template slot="title">
 							<i :class="[menu2.meta.icon]"></i>
-							{{menu2.meta.label}}
+							{{menu2.meta.label}}2
 						</template>
 						<!-- 三级路由 -->
 						<MenuItem :index="`${menu._id}-${menu2._id}-${menu3.path}`"
-											v-if="menu3.meta.isShow&&menu.name!=''"
+											v-if="menu3.meta.isShow&&menu3.name!=''"
 											v-for="(menu3,menu3Index) in menu2.children" :key="menu3Index"
-											@click="handleChange(menu3, `${menu._id}-${menu2.path}-${menu3.path}`, menu3.path)">
+											@click="handleChange(menu3, `${menu._id}-${menu2._id}-${menu3.path}`, menu3.path)">
 							<i :class="[menu3.meta.icon]"></i>
 							{{menu3.meta.label}}
 						</MenuItem>
 					</Submenu>
-					<!-- 二级路由 -->
-					<MenuItem :index="`${menu._id}-${menu2.path}`"
-										v-if="menu2.meta.isShow&&menu2.name!=''"
-										v-for="(menu2,jItems) in menu.children" :key="jItems"
-										@click="handleChange(menu2, `${menu._id}-${menu2.path}`, menu2.path)">
-						<i :class="[menu2.meta.icon]"></i>
-						{{menu2.meta.label}}
-					</MenuItem>
 				</Submenu>
 			</Menu>
 		</div>
@@ -67,8 +67,7 @@
 						:background-color="navStyle.backgroundColor"
 						:style="{'background-color' : navStyle.backgroundColor}"
 						mode="vertical"
-						:default-active="getActiveIndex"
-						router>
+						:default-active="getActiveIndex">
 				<MenuItem :style="pattern == 2 && isShowMenu ? 'width: auto;':'width: 200px;'"
 									:index="`${menu.path}`"
 									v-if="!menu.meta.isShow&&menu.name!=''"
@@ -85,6 +84,14 @@
 						<i :class="[menu.meta.icon]"></i>
 						{{menu.meta.label}}
 					</template>
+					<!-- 二级路由 -->
+					<MenuItem :index="`${menu._id}-${menu2.path}`"
+										v-if="menu2.meta.isShow&&menu2.name!=''"
+										v-for="(menu2,jItems) in menu.children" :key="jItems"
+										@click="handleChange(menu2, `${menu._id}-${menu2.path}`, menu2.path)">
+						<i :class="[menu2.meta.icon]"></i>
+						{{menu2.meta.label}}
+					</MenuItem>
 					<!-- 二级菜单 -->
 					<Submenu :style="pattern == 2 ? 'width: auto;':'width: 200px;'"
 									 :index="`${menu._id}-${menu2._id}`"
@@ -96,21 +103,13 @@
 						</template>
 						<!-- 三级路由 -->
 						<MenuItem :index="`${menu._id}-${menu2._id}-${menu3.path}`"
-											v-if="menu3.meta.isShow&&menu.name!=''"
+											v-if="menu3.meta.isShow&&menu3.name!=''"
 											v-for="(menu3,menu3Index) in menu2.children" :key="menu3Index"
-											@click="handleChange(menu3, `${menu._id}-${menu2.path}-${menu3.path}`, menu3.path)">
+											@click="handleChange(menu3, `${menu._id}-${menu2._id}-${menu3.path}`, menu3.path)">
 							<i :class="[menu3.meta.icon]"></i>
-							{{menu3.meta.label}}
+							{{menu3.meta.label}}111
 						</MenuItem>
 					</Submenu>
-					<!-- 二级路由 -->
-					<MenuItem :index="`${menu._id}-${menu2.path}`"
-										v-if="menu2.meta.isShow&&menu2.name!=''"
-										v-for="(menu2,jItems) in menu.children" :key="jItems"
-										@click="handleChange(menu2, `${menu._id}-${menu2.path}`, menu2.path)">
-						<i :class="[menu2.meta.icon]"></i>
-						{{menu2.meta.label}}
-					</MenuItem>
 				</Submenu>
 			</Menu>
 		</div>
@@ -137,7 +136,6 @@
 </style>
 <script>
 	import { mapMutations, mapState } from 'vuex'
-
 	export default {
 		components: {},
 		mixins: [],

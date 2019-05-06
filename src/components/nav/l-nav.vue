@@ -13,9 +13,9 @@
 					 'color':navStyle.textColor
 					 }"
 					 :class="[{'nav-fixed-header': fixedHeader}]">
-				Vue Asgin
+				Vue Asgisn
 			</div>
-			<LMenu :is-show-menu="isShowMenu"></LMenu>
+			<LMenu></LMenu>
 		</Aside>
 	</div>
 </template>
@@ -42,9 +42,7 @@
 		mixins: [],
 		name: 'LNav',
 		data () {
-			return {
-				isShowMenu:true
-			}
+			return {}
 		},
 		props: {},
 		computed: {
