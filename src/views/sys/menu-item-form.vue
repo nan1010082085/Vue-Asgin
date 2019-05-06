@@ -67,9 +67,7 @@
 		props: {},
 		computed: {},
 		watch: {},
-		created () {
-			console.log(this.$route)
-		},
+		created () {},
 		mounted () {
 			this.getMenuOption()
 		},
@@ -82,7 +80,7 @@
 						icon: '',
 						location: '',
 						label: '',
-						isShow: true
+						isShow: true,  //是否显示
 					},
 					parentId: ''
 				}
@@ -93,7 +91,7 @@
 			setOptions(menu){
 				for (let i = 0; i < menu.length; i++) {
 					const menu1 = menu[ i ]
-					if(menu1.meta.isShow){
+					if(menu1.meta.isShow&&menu1.meta.isSubmenu){
 						this.options.push(menu1)
 						if(menu1.children){
 							this.setOptions(menu1.children)

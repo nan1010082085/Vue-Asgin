@@ -58,7 +58,8 @@
 						isShow:true,
 					},
 					parentId:'',
-				}
+				},
+				options:[]
 			}
 		},
 		props: {},
@@ -69,13 +70,27 @@
 		},
 		mounted () {},
 		methods: {
+			reset () {
+				this.form = {
+					path: '',
+					name: '',
+					meta: {
+						icon: '',
+						location: '',
+						label: '',
+						isShow: true,
+						isSubmenu: true //是否是菜单
+					},
+					parentId: ''
+				}
+			},
 			getMenuOption () {
 				this.setOptions(JSON.parse(sessionStorage.getItem('menu')))
 			},
 			setOptions(menu){
 				for (let i = 0; i < menu.length; i++) {
 					const menu1 = menu[ i ]
-					if(menu1.meta.isShow){
+					if(menu1.meta.isShow&&menu1.meta.isSubmenu){
 						this.options.push(menu1)
 						if(menu1.children){
 							this.setOptions(menu1.children)

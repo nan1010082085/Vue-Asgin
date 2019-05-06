@@ -1,8 +1,5 @@
 <template>
 	<div class="main-container-warp">
-		<Row>
-
-		</Row>
 		<Table
 			:data="tableData" style="width: 100%;" border>
 			<TableColumn

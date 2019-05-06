@@ -58,8 +58,7 @@
 			]),
 			handleClick (evt) {
 				this.menuList.forEach((item) => {
-					console.log(item)
-					if (item.path === evt.name.toLocaleLowerCase()) {
+					if (item.path === evt.name) {
 						this.setActiveMenu({ menu: `${item.parentId}-${item.path}`, tabs: item.path })
 						this.$router.push({ name: item.name, query: item.query })
 						return false
@@ -70,7 +69,7 @@
 				this.closeMenuList(evt)
 				if (this.tabsList.toString() === '') {
 					this.closeTabs()
-					this.$router.push({ name: 'views' })
+					this.$router.push({ name: 'home' })
 				}
 			},
 			getTabs (tabs) {

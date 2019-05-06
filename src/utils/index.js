@@ -94,7 +94,6 @@ function goTabsRoute (router, tabs, query, callback) {
  * **/
 function isRoutePath (menu, to) {
 	let temp = []
-	
 	function temps (menu) {
 		for (let i = 0; i < menu.length; i++) {
 			const menu1 = menu[ i ]
@@ -104,8 +103,9 @@ function isRoutePath (menu, to) {
 			}
 		}
 	}
+	let path = to.path.split('/')[ to.path.split('/').length - 1 ].replace(/-/g, '')
 	temps(menu)
-	return temp.filter(rec => rec.name.toLocaleLowerCase() == to.path.split('/')[ to.path.split('/').length - 1 ]).length >= 1 ? true : false
+	return temp.filter(rec => rec.name.toLocaleLowerCase() == path ).length >= 1 ? true : false
 }
 
 export {

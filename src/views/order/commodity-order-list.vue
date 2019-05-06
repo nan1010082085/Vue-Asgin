@@ -1,6 +1,5 @@
 <template>
 	<div class="main-container-warp">
-		<Row>商品订单列表</Row>
 		<Table
 			:data="tableData"
 			style="width: 100%;"

@@ -15,6 +15,13 @@ const defaultRoutes = [
 	{ path: '/login', name: 'Login', component: component('user/login'), meta: { label: 'Login', default: true } },
 	{ path: '/404', name: 'nofound', component: component('utils/404'), meta: { label: '404', default: true } }
 ]
+
+/**
+* 所有新添加的路由都在view children下
+* 站内规则：
+* 路由path应为简写名称 短线连接 例子： add-menu-list
+* 路由name应为path大写
+* **/
 const viewRoutes = {
 	path: '/views',
 	name: 'views',
@@ -118,9 +125,10 @@ router.beforeEach((to, from, next) => {
 			|| to.path !== '/login' && localStorage.getItem('register') == 'undefined') {
 			Message('请先登录')
 			next({ name: 'Login' })
-		} else if (isRoutePath([ JSON.parse(sessionStorage.getItem('menuList')) ], to)) {
+		} else if(isRoutePath([ JSON.parse(sessionStorage.getItem('menuList')) ], to)) {
 			next()
 		} else {
+			Message.warning('跳转页面不存在')
 			next({ name: 'nofound' })
 		}
 	}
