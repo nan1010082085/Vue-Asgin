@@ -6,6 +6,7 @@ import Router                  from 'vue-router'
 import { Message }             from 'element-ui'
 import component               from './router/index'
 import { get_route_menu_list } from './api/sys'
+import {isRoutePath} from './utils'
 
 Vue.use(Router)
 
@@ -19,7 +20,8 @@ const viewRoutes = {
 	name: 'views',
 	component: component('views'),
 	meta: {
-		label: 'views'
+		label: 'views',
+		default: true
 	},
 	children: [],
 	beforeEnter: (to, from, next) => {
@@ -68,7 +70,7 @@ function pushRoute (routes) {
  *
  * @pushRouteList 重新获取路由时清空全局数据
  * */
-function setAddRoutesMenuList (to,next) {
+function setAddRoutesMenuList (to, next) {
 	get_route_menu_list()
 		.then(res => {
 			//生产中不显示菜单设置
@@ -87,10 +89,10 @@ function setAddRoutesMenuList (to,next) {
 			router.options.isAddBusinessRoutesMenu = true
 			sessionStorage.setItem('menuList', JSON.stringify(viewRoutes) || '{}')
 			sessionStorage.setItem('menu', JSON.stringify(res.data) || '[]')
-			next({...to})
+			next({ ...to })
 		})
 		.catch(() => {
-			router.push({ name: 'Login' })
+			// router.push({ name: 'Login' })
 		})
 }
 
@@ -103,11 +105,11 @@ const router = new Router({
 	},
 	routes: defaultRoutes
 })
-
 setAddRoutesMenuList()
 
 router.beforeEach((to, from, next) => {
-	if (router.options.isAddBusinessRoutesMenu || to.matched.some(recad => recad.meta.default)) {
+	if (router.options.isAddBusinessRoutesMenu && isRoutePath([ JSON.parse(sessionStorage.getItem('menuList')) ], to)
+		|| to.matched.some(recad => recad.meta.default)) {
 		next()
 	} else {
 		if (to.path === '/') {
@@ -116,8 +118,10 @@ router.beforeEach((to, from, next) => {
 			|| to.path !== '/login' && localStorage.getItem('register') == 'undefined') {
 			Message('请先登录')
 			next({ name: 'Login' })
-		} else {
+		} else if (isRoutePath([ JSON.parse(sessionStorage.getItem('menuList')) ], to)) {
 			next()
+		} else {
+			next({ name: 'nofound' })
 		}
 	}
 })

@@ -25,6 +25,17 @@
 				inactive-color="#ff4949">
 			</el-switch>
 		</FormItem>
+		<FormItem label="所在菜单">
+			<Select class="menu-item-form-select" v-model="form.parentId">
+				<Option v-for="item in options"
+								:key="item._id"
+								:label="item.meta.label"
+								:value="item._id"></Option>
+			</Select>
+			<Tooltip class="item" effect="dark" content="选择所在菜单添加的路由为2级路由，不选择则为1级路由" placement="top">
+				<Button type="text" icon="el-icon-question"></Button>
+			</Tooltip>
+		</FormItem>
 		<FormItem>
 			<Button class="menu-submit-button" type="primary">添加</Button>
 		</FormItem>
@@ -45,16 +56,34 @@
 						location:'',
 						label:'',
 						isShow:true,
-					}
+					},
+					parentId:'',
 				}
 			}
 		},
 		props: {},
 		computed: {},
 		watch: {},
-		created () {},
+		created () {
+			this.getMenuOption()
+		},
 		mounted () {},
-		methods: {},
+		methods: {
+			getMenuOption () {
+				this.setOptions(JSON.parse(sessionStorage.getItem('menu')))
+			},
+			setOptions(menu){
+				for (let i = 0; i < menu.length; i++) {
+					const menu1 = menu[ i ]
+					if(menu1.meta.isShow){
+						this.options.push(menu1)
+						if(menu1.children){
+							this.setOptions(menu1.children)
+						}
+					}
+				}
+			},
+		},
 		filters: {},
 		directives: {},
 		beforeDestroy () {

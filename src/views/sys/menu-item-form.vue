@@ -88,7 +88,18 @@
 				}
 			},
 			getMenuOption () {
-				this.options = JSON.parse(sessionStorage.getItem('menu')).filter(menu => menu.meta.isShow)
+				this.setOptions(JSON.parse(sessionStorage.getItem('menu')))
+			},
+			setOptions(menu){
+				for (let i = 0; i < menu.length; i++) {
+					const menu1 = menu[ i ]
+					if(menu1.meta.isShow){
+						this.options.push(menu1)
+						if(menu1.children){
+							this.setOptions(menu1.children)
+						}
+					}
+				}
 			},
 			setMenuItem () {
 				let params = this.form

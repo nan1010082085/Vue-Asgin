@@ -87,11 +87,33 @@ function goTabsRoute (router, tabs, query, callback) {
 	router.push({ name:route.name,query:query })
 }
 
+/**
+ * 验证路由是否存在
+ * @menu  menulist 接口获取的路由数据存放在sessionStorage
+ * @to 当前跳转的路由
+ * **/
+function isRoutePath (menu, to) {
+	let temp = []
+	
+	function temps (menu) {
+		for (let i = 0; i < menu.length; i++) {
+			const menu1 = menu[ i ]
+			temp.push(menu1)
+			if (menu1.children) {
+				temps(menu1.children)
+			}
+		}
+	}
+	temps(menu)
+	return temp.filter(rec => rec.name.toLocaleLowerCase() == to.path.split('/')[ to.path.split('/').length - 1 ]).length >= 1 ? true : false
+}
+
 export {
 	isLocalStorageSupported,
 	sendCode,
 	resize,
 	isHanzi,
 	getRouteItem,
-	goTabsRoute
+	goTabsRoute,
+	isRoutePath
 }
