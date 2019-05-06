@@ -106,7 +106,6 @@
 						if (res.code != 200) {
 							return this.$message.error(res.msg)
 						} else {
-							console.log(this.$route)
 							this.reset()
 							this.$router.push({
 								name: this.$route.name,

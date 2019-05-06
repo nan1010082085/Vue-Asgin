@@ -3,21 +3,12 @@
 		<FormItem>
 			<h2>导航菜单</h2>
 		</FormItem>
-		<!--<FormItem label="菜单url">-->
-			<!--<Input v-model="form.path"></Input>-->
-		<!--</FormItem>-->
-		<!--<FormItem label="菜单别名">-->
-			<!--<Input v-model="form.name"></Input>-->
-		<!--</FormItem>-->
 		<FormItem label="菜单图标">
 			<Input v-model="form.meta.icon"></Input>
 		</FormItem>
 		<FormItem label="展示名称" required>
 			<Input v-model="form.meta.label"></Input>
 		</FormItem>
-		<!--<FormItem label="菜单地址">-->
-			<!--<Input v-model="form.meta.location"></Input>-->
-		<!--</FormItem>-->
 		<FormItem label="是否显示">
 			<el-switch
 				v-model="form.meta.isShow"
@@ -37,11 +28,12 @@
 			</Tooltip>
 		</FormItem>
 		<FormItem>
-			<Button class="menu-submit-button" type="primary">添加</Button>
+			<Button class="menu-submit-button" type="primary" @click="setMenu('form')">添加</Button>
 		</FormItem>
 	</Form>
 </template>
 <script>
+	import {add_route_menu} from '../../api/sys'
 	export default {
 		components: {},
 		mixins: [],
@@ -56,6 +48,7 @@
 						location:'',
 						label:'',
 						isShow:true,
+						isSubmenu: true //是否是菜单
 					},
 					parentId:'',
 				},
@@ -79,7 +72,7 @@
 						location: '',
 						label: '',
 						isShow: true,
-						isSubmenu: true //是否是菜单
+						isSubmenu: true
 					},
 					parentId: ''
 				}
@@ -97,6 +90,24 @@
 						}
 					}
 				}
+			},
+			setMenu(){
+				let params = this.form
+				console.log(params)
+				add_route_menu(params)
+					.then(res=>{
+						if (res.code != 200) {
+							return this.$message.error(res.msg)
+						} else {
+							this.reset()
+							this.$router.push({
+								name: this.$route.name,
+								query: { t: new Date().getTime() },
+								redirect: true
+							})
+							this.$message.success(res.msg)
+						}
+					})
 			},
 		},
 		filters: {},
