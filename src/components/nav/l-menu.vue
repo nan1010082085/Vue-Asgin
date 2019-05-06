@@ -34,7 +34,7 @@
 										v-for="(menu2,jItems) in menu.children" :key="jItems"
 										@click="handleChange(menu2, `${menu._id}-${menu2.path}`, menu2.path)">
 						<i :class="[menu2.meta.icon]"></i>
-						{{menu2.meta.label}}1
+						{{menu2.meta.label}}
 					</MenuItem>
 					<!-- 二级菜单 -->
 					<Submenu :style="pattern == 2 ? 'width: auto;':'width: 200px;'"
@@ -43,7 +43,7 @@
 									 v-for="(menu2,menu2Index) in menu.children" :key="menu2Index">
 						<template slot="title">
 							<i :class="[menu2.meta.icon]"></i>
-							{{menu2.meta.label}}2
+							{{menu2.meta.label}}
 						</template>
 						<!-- 三级路由 -->
 						<MenuItem :index="`${menu._id}-${menu2._id}-${menu3.path}`"
@@ -107,7 +107,7 @@
 											v-for="(menu3,menu3Index) in menu2.children" :key="menu3Index"
 											@click="handleChange(menu3, `${menu._id}-${menu2._id}-${menu3.path}`, menu3.path)">
 							<i :class="[menu3.meta.icon]"></i>
-							{{menu3.meta.label}}111
+							{{menu3.meta.label}}
 						</MenuItem>
 					</Submenu>
 				</Submenu>
@@ -182,9 +182,6 @@
 					this.$router.push({name:route.name,query:route.query})
 				}
 			},
-			menuList: {
-				handler :'initMenuList'
-			}
 		},
 		created () {
 			this.getData()
@@ -198,25 +195,10 @@
 			getData () {
 				this.menuList = JSON.parse(sessionStorage.getItem('menu'))
 			},
-			initMenuList(list){
-				/*
-				* 初始化数据 --- 刷新网页时
-				* */
-				if(this.activeIndex === ''){
-					list.forEach((item) => {
-						if (item.children) {
-							item.children.forEach((items) => {
-								if (items.path == this.$route.name) {
-									this.handleChange(items, `${items.parentId}-${items.path}`, items.path)
-									return
-								}
-							})
-						}
-					})
-				}
-			},
 			/* 导航跳转时 */
 			handleChange (menuItem, index, tabs) {
+				//菜单打开-选中唯一标识 activeIndex
+				menuItem['activeIndex'] = index
 				this.setActiveMenu({ menu: index, tabs: tabs })
 				menuItem[ 'query' ] = this.$route.query
 				this.setMenuList(menuItem)
@@ -224,6 +206,7 @@
 			},
 			/* 一级导航跳转 */
       handleRoute(menu, index, tabs){
+				menu['activeIndex'] = index
         this.setActiveMenu({ menu: index, tabs: tabs })
         this.$router.push({name:menu.name})
 			},

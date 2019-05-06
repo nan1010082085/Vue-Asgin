@@ -59,7 +59,7 @@
 			handleClick (evt) {
 				this.menuList.forEach((item) => {
 					if (item.path === evt.name) {
-						this.setActiveMenu({ menu: `${item.parentId}-${item.path}`, tabs: item.path })
+						this.setActiveMenu({ menu: item.activeIndex, tabs: item.path })
 						this.$router.push({ name: item.name, query: item.query })
 						return false
 					}

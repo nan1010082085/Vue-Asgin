@@ -74,8 +74,6 @@ function pushRoute (routes) {
  * 本地存储路由信息
  * 如果本地路由信息不存在则调用接口获取
  * 扩展可以在每次添加新的路由时清空 KEY:menuList 来重新获取新的路由数据
- *
- * @pushRouteList 重新获取路由时清空全局数据
  * */
 function setAddRoutesMenuList (to, next) {
 	get_route_menu_list()
@@ -102,6 +100,7 @@ function setAddRoutesMenuList (to, next) {
 			// router.push({ name: 'Login' })
 		})
 }
+
 
 const router = new Router({
 	// mode: 'history',

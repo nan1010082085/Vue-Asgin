@@ -62,7 +62,7 @@ const mutations = {
 					* */
 					try {
 						let params = state.tabsList[ index - 1 < 0 ? 0 : index - 1 ]
-						state.activeMenu = 	`${params.parentId}-${params.path}`
+						state.activeMenu = 	params.activeIndex
 						state.activeTabs = 	params.path
 						state.closeRouterName = {name:params.name,query:params.query }
 					}catch (e) {}
