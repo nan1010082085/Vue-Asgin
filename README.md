@@ -52,5 +52,5 @@
   .env.development --- 开发环境静态变量
   .env.production --- 生产环境静态变量
   config.js   //通过shelljs 来配置不同环境下采用的变量【config】和模式【router】
-  vue.config.js vuecli的一些配置项
+  vue.config.js vuecli的一些配置项1
 ```
