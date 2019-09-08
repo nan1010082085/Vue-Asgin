@@ -73,7 +73,7 @@ module.exports = {
 	pluginOptions : {},
 	//开发服务配置
 	devServer : {
-		port : '7777',
+		port : '3030',
 		overlay : {
 			warnings : true,
 			errors : true

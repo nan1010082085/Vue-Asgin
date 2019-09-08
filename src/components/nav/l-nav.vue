@@ -13,7 +13,7 @@
 					 'color':navStyle.textColor
 					 }"
 					 :class="[{'nav-fixed-header': fixedHeader}]">
-				Vue Asgisn
+				Vue asgin
 			</div>
 			<LMenu></LMenu>
 		</Aside>
@@ -23,6 +23,7 @@
 	@import "../../assets/css/variables";
 	.nav {
 		width: 200px;
+		min-height: 100vh;
 	}
 	i[class^=el-icon-]{
 		color: #fff !important;

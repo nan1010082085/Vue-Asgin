@@ -9,13 +9,13 @@
 			placeholder="请输入搜索的导航"
 			@select="handleSelect"
 		>
-			<Button
+			<!--<Button
 				class="search-show-color"
 				:style="{'color': $store.state.layout.navStyle.textColor} "
 				icon="el-icon-search"
-				type="text"
 				slot="suffix"
-				@click="handleIconClick"></Button>
+				@click="handleIconClick"></Button>-->
+			<i slot="suffix" class="el-input__icon el-icon-search"></i>
 		</Autocomplete>
 
 		<Popover
@@ -34,6 +34,10 @@
 					</FormItem>
 					<FormItem label="登录时间:">
 						<div class="item-ctn">{{roleForm.date}}</div>
+					</FormItem>
+					<FormItem>
+						<!--<Button type="text" @click.native="handleEditPass">修改密码</Button>-->
+						<Button type="text" @click.native="handleOut">退出登录</Button>
 					</FormItem>
 				</Form>
 			</div>
@@ -174,7 +178,11 @@
 					return (state.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
 				}
 			},
-			handleSelect (item) {}
+			handleSelect (item) {},
+      handleEditPass(){},
+      handleOut(){
+			  this.$router.push({name: 'Login'})
+			}
 		}
 	}
 </script>

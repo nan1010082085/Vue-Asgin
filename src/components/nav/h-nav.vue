@@ -6,7 +6,7 @@
 				 	'color': navStyle.textColor
 				 }"
 				 :class="[{'nav-fixed-header': fixedHeader,'tar': isNavHeaderTar}]">
-			Vue Asgisn
+			Vue asgin
 		</div>
 		<div class="h-nav-menu" :style="{'background-color' : navStyle.backgroundColor}">
 			<LMenu :visible="isShowClickMenu" :is-show-menu="isShowSearch"></LMenu>

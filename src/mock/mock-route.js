@@ -1,11 +1,137 @@
 const Mock = require('mockjs')
 
-const Random = Mock.Random
+const Random = Mock.Random;
 
 const routeData = function () {
-	let route = [{"children":[{"_id":"5cc5c9832f38384518485c23","path":"setting","name":"Setting","meta":{"icon":"","location":"sys/setting","isShow":true,"label":"路由列表"},"parentId":"5cc5c695e659cc3b54cbdad5","created":"2019-04-28T15:40:51.435Z","__v":0,"component":{"components":{},"mixins":[],"name":"config","props":{},"computed":{},"watch":{},"methods":{},"filters":{},"staticRenderFns":[],"_compiled":true,"_scopeId":"data-v-1e91d438","beforeCreate":[null],"beforeDestroy":[null],"__file":"src/views/sys/setting.vue"}},{"_id":"5cc5ca841bd1ef41f4e1e111","path":"add-menu-item","name":"AddMenuItem","meta":{"icon":"","location":"sys/add-menu-item","isShow":false,"label":"添加导航"},"parentId":"5cc5c695e659cc3b54cbdad5","created":"2019-04-28T15:45:08.398Z","__v":0,"component":{"components":{"vMenuForm":{"components":{},"mixins":[],"name":"menu-form","props":{},"computed":{},"watch":{},"methods":{},"filters":{},"directives":{},"beforeDestroy":[null,null],"staticRenderFns":[],"_compiled":true,"_scopeId":"data-v-caa517f4","beforeCreate":[null],"__file":"src/views/sys/menu-form.vue"},"vMenuItemForm":{"components":{},"mixins":[],"name":"menu-item-form","props":{},"computed":{},"watch":{},"methods":{},"filters":{},"directives":{},"beforeDestroy":[null,null],"staticRenderFns":[],"_compiled":true,"_scopeId":"data-v-34c56e6c","beforeCreate":[null],"__file":"src/views/sys/menu-item-form.vue"}},"mixins":[],"name":"add-menu-item","props":{},"computed":{},"watch":{},"methods":{},"filters":{},"staticRenderFns":[],"_compiled":true,"_scopeId":"data-v-68eb80a9","beforeCreate":[null],"beforeDestroy":[null],"__file":"src/views/sys/add-menu-item.vue"}}],"_id":"5cc5c695e659cc3b54cbdad5","path":"","name":"","meta":{"icon":"","location":"","isShow":true,"isSubmenu":true,"label":"菜单设置"},"created":"2019-04-28T15:28:21.823Z","__v":0},{"children":[{"_id":"5cceacbaba552828a0601bb4","path":"commodity-order-list","name":"commodityOrderList","meta":{"icon":"el-icon-s-order","location":"order/commodity-order-list","label":"商品订单","isShow":true},"parentId":"5cc5cbc17f697639d0aad1a7","__v":0,"component":{"components":{},"mixins":[],"name":"commodity-order","props":{},"computed":{},"watch":{},"methods":{},"filters":{},"directives":{},"staticRenderFns":[],"_compiled":true,"_scopeId":"data-v-24c62d18","beforeCreate":[null],"beforeDestroy":[null],"__file":"src/views/order/commodity-order-list.vue"}}],"_id":"5cc5cbc17f697639d0aad1a7","path":"","name":"","meta":{"icon":"","location":"","isShow":true,"isSubmenu":true,"label":"订单管理"},"created":"2019-04-28T15:50:25.815Z","__v":0},{"children":[{"_id":"5cc80aa2efc96f0790f8298d","path":"user-list","name":"userList","meta":{"icon":"el-icon-user","location":"user-classify/user-list","label":"用户列表","isShow":true},"parentId":"5cc5cbf4e3e4750b202be73d","__v":0,"component":{"components":{},"mixins":[],"name":"user-list","props":{},"computed":{},"watch":{},"methods":{},"filters":{},"staticRenderFns":[],"_compiled":true,"_scopeId":"data-v-5f1c682d","beforeCreate":[null],"beforeDestroy":[null],"__file":"src/views/user-classify/user-list.vue"}}],"_id":"5cc5cbf4e3e4750b202be73d","path":"","name":"","meta":{"icon":"","location":"","isShow":true,"isSubmenu":true,"label":"用户管理"},"created":"2019-04-28T15:51:16.957Z","__v":0},{"children":[],"_id":"5cce992319f1fda8b3a28e21","path":"home","name":"home","meta":{"icon":"","location":"home","isShow":false,"label":"首页"},"__v":0,"component":{"components":{},"mixins":[],"name":"","props":{},"computed":{},"watch":{},"methods":{},"filters":{},"staticRenderFns":[],"_compiled":true,"_scopeId":"data-v-7eb2bc79","beforeCreate":[null],"beforeDestroy":[null],"__file":"src/views/home.vue"}},{"children":[{"_id":"5cceacbaba552828a0601234","path":"commodity-orde","name":"commodityOrde","meta":{"icon":"el-icon-s-order","location":"order/commodity-order-list","label":"活动管理3-1","isShow":true},"parentId":"5ccfd01c9117802c049e1aae","__v":0,"component":{"components":{},"mixins":[],"name":"commodity-order","props":{},"computed":{},"watch":{},"methods":{},"filters":{},"directives":{},"staticRenderFns":[],"_compiled":true,"_scopeId":"data-v-24c62d18","beforeCreate":[null],"beforeDestroy":[null],"__file":"src/views/order/commodity-order-list.vue"}},{"children":[{"_id":"5cceacbaba552828a0601bb1","path":"commodity-order","name":"commodityOrder","meta":{"icon":"el-icon-s-order","location":"order/commodity-order-list","label":"活动管理3","isShow":true},"parentId":"5ccfd0ea2ebc6e364800f1eb","__v":0,"component":{"components":{},"mixins":[],"name":"commodity-order","props":{},"computed":{},"watch":{},"methods":{},"filters":{},"directives":{},"staticRenderFns":[],"_compiled":true,"_scopeId":"data-v-24c62d18","beforeCreate":[null],"beforeDestroy":[null],"__file":"src/views/order/commodity-order-list.vue"}}],"_id":"5ccfd0ea2ebc6e364800f1eb","path":"","name":"","meta":{"icon":"","location":"","label":"活动管理2","isShow":true,"isSubmenu":true},"parentId":"5ccfd01c9117802c049e1aae","__v":0}],"_id":"5ccfd01c9117802c049e1aae","path":"","name":"","meta":{"icon":"","location":"","label":"活动管理","isShow":true,"isSubmenu":true},"__v":0}]
-	
-	return route
+  let route = [
+    {
+      "_id" : "5cce992319f1fda8b3a28e21",
+      "path" : "home",
+      "name" : "home",
+      "meta" : { "icon" : "", "location" : "home", "isShow" : true, "label" : "首页" },
+    },
+    {
+      "children" : [
+        {
+          "_id" : "menu-id-1-1",
+          "path" : "commodity-order-list",
+          "name" : "commodityOrderList",
+          "meta" : {
+            "icon" : "",
+            "location" : "order/commodity-order-list",
+            "label" : "预约订单",
+            "isShow" : true
+          },
+          "parentId" : "menu-id-1"
+        },
+        {
+          "_id" : "menu-id-1-2",
+          "path" : "use-order-list",
+          "name" : "useOrderList",
+          "meta" : {
+            "icon" : "",
+            "location" : "order/use-order-list",
+            "label" : "使用订单",
+            "isShow" : true
+          },
+          "parentId" : "menu-id-1"
+        }
+      ],
+      "_id" : "menu-id-1",
+      "path" : "",
+      "name" : "",
+      "meta" : { "icon" : "", "location" : "", "isShow" : true, "isSubmenu" : true, "label" : "订单管理" },
+      "created" : "2019-04-28T15:50:25.815Z",
+    },
+    {
+      "children" : [
+        {
+          "_id" : "menu-id-2-1",
+          "path" : "repairs-list",
+          "name" : "repairsList",
+          "meta" : {
+            "icon" : "",
+            "location" : "maintain/repairs-list",
+            "label" : "报修",
+            "isShow" : true
+          },
+          "parentId" : "menu-id-2",
+        },
+        {
+          "_id" : "menu-id-2-2",
+          "path" : "pending-list",
+          "name" : "pendingList",
+          "meta" : {
+            "icon" : "",
+            "location" : "maintain/pending-list",
+            "label" : "待处理",
+            "isShow" : true
+          },
+          "parentId" : "menu-id-2",
+        },
+        {
+          "_id" : "menu-id-2-3",
+          "path" : "maintain-list",
+          "name" : "maintainList",
+          "meta" : {
+            "icon" : "",
+            "location" : "maintain/maintain-list",
+            "label" : "订单列表",
+            "isShow" : true
+          },
+          "parentId" : "menu-id-2",
+        }
+      ],
+      "_id" : "menu-id-2",
+      "path" : "",
+      "name" : "",
+      "meta" : { "icon" : "", "location" : "", "isShow" : true, "isSubmenu" : true, "label" : "维修管理" },
+      "created" : "2019-04-28T15:51:16.957Z",
+    },
+    {
+      "_id" : "menu-id-4",
+      "path" : "member-list",
+      "name" : "memberList",
+      "meta" : { "icon" : "", "location" : "member/member-list", "isShow" : true, "label" : "会员管理" },
+    },
+    {
+      "children" : [
+        {
+          "_id" : "5cceacbaba552828a0601234",
+          "path" : "work-admin",
+          "name" : "workAdmin",
+          "meta" : {
+            "icon" : "",
+            "location" : "system/work-admin",
+            "label" : "工位管理",
+            "isShow" : true
+          },
+          "parentId" : "menu-id-3-1"
+        },
+        {
+          "children" : [],
+          "_id" : "5ccfd0ea2ebc6e364800f1eb",
+          "path" : "floor-admin",
+          "name" : "floorAdmin",
+          "meta" : { "icon" : "", "location" : "system/floor-admin", "label" : "楼层管理", "isShow" : true },
+          "parentId" : "menu-id-3-2"
+        },
+        {
+          "children" : [],
+          "_id" : "5ccfd0ea2ebc6e364800f1eb",
+          "path" : "system-details",
+          "name" : "systemDetails",
+          "meta" : { "icon" : "", "location" : "system/system-details", "label" : "系统参数", "isShow" : true },
+          "parentId" : "menu-id-3-2"
+        }
+      ],
+      "_id" : "menu-id-3",
+      "path" : "",
+      "name" : "",
+      "meta" : { "icon" : "", "location" : "", "label" : "系统设置", "isShow" : true, "isSubmenu" : true }
+    },
+  ]
+  return route
 }
 
 Mock.mock('/route/index', 'post', routeData)

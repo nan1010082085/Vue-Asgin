@@ -88,7 +88,7 @@
 
 	.show-menu {
 		position: absolute;
-		left: 15px;
+		left: 200px;
 		top: 20px;
 		z-index: 11;
 		cursor: pointer;
