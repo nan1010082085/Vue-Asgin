@@ -51,7 +51,7 @@
 					<MenuItem :style="pattern == 2 ? 'width: auto;':'width: 200px;'"
 										:index="`${menu.path}`"
 										v-else="!menu.meta.isShow&&menu.name!=''"
-										@click="handleRoute(menu, menu.path, '')">
+										@click="handleRoute(menu, menu.path, menu.path)">
 						<i :class="[menu.meta.icon]"></i>
 						{{menu.meta.label}}
 					</MenuItem>
@@ -213,6 +213,11 @@
       handleRoute ( menu, index, tabs ) {
         menu[ 'activeIndex' ] = index
         this.setActiveMenu({ menu : index, tabs : tabs })
+				/* 此处判断 如果不是首页的 1级导航则添加tbas */
+        if(menu.name != 'home'){
+          menu[ 'query' ] = this.$route.query
+          this.setMenuList(menu)
+				}
         this.$router.push({ name : menu.name })
       }
     },
