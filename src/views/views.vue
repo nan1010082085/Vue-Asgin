@@ -37,14 +37,14 @@
 
 	.as-views-container {
 		width: 100%;
-		min-height: 100vh;
+		/*min-height: 100vh;*/
 		flex-wrap: wrap;
 		background: #f9f9f9;
 	}
 
 	.main-default {
 		width: 100%;
-		height: calc(100% - 60px);
+		/*height: calc(100% - 60px);*/
 
 		.main-route-view {
 			/*width: calc(100% - 1px);*/

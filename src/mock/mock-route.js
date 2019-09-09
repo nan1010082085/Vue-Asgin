@@ -109,7 +109,6 @@ const routeData = function () {
           "parentId" : "menu-id-3-1"
         },
         {
-          "children" : [],
           "_id" : "5ccfd0ea2ebc6e364800f1eb",
           "path" : "floor-admin",
           "name" : "floorAdmin",
@@ -117,7 +116,6 @@ const routeData = function () {
           "parentId" : "menu-id-3-2"
         },
         {
-          "children" : [],
           "_id" : "5ccfd0ea2ebc6e364800f1eb",
           "path" : "system-details",
           "name" : "systemDetails",

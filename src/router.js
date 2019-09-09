@@ -54,17 +54,17 @@ function routeElement ( route ) {
  * */
 let pushRouteList = []
 
-const pushRoute = ( routes ) => {
-  for ( let i = 0 ; i < routes.length ; i++ ) {
+function pushRoute ( routes ) {
+  for ( let i = 0; i < routes.length; i++ ) {
     let listElement = routes[ i ];
-    if ( listElement.children && Array.isArray(listElement.children)
-      && listElement.children.length > 0 ) {
+    if ( listElement.children && Array.isArray(listElement.children) && listElement.children.length > 0 ) {
       pushRoute(listElement.children)
-    } else if (listElement.path) {
+    } else if ( listElement.path ) {
       pushRouteList.push(routeElement(listElement))
-      return pushRouteList
     }
   }
+  
+  return pushRouteList
 }
 
 /*
@@ -72,7 +72,7 @@ const pushRoute = ( routes ) => {
  * 如果本地路由信息不存在则调用接口获取
  * 扩展可以在每次添加新的路由时清空 KEY:menuList 来重新获取新的路由数据
  * */
-const setAddRoutesMenuList = ( to, next ) => {
+function setAddRoutesMenuList ( to, next ) {
   route_list()
     .then(res => {
       //生产中不显示菜单设置
@@ -85,11 +85,10 @@ const setAddRoutesMenuList = ( to, next ) => {
         })
       }
       //views
-      console.log(viewRoutes, 'before');
       viewRoutes.children = [ ...pushRoute(res) ]
-      console.log(viewRoutes, 'after');
-      // 注入动态路由
+      //注入动态路由
       router.addRoutes([ viewRoutes ])
+      console.log(router);
       router.options.isAddBusinessRoutesMenu = true
       sessionStorage.setItem('menuList', JSON.stringify(viewRoutes) || '{}')
       sessionStorage.setItem('menu', JSON.stringify(res) || '[]')
@@ -132,7 +131,7 @@ router.beforeEach(( to, from, next ) => {
   }
 })
 router.afterEach(( to, from ) => {
-  // console.log('route after', router)
+  console.log('route after', router)
 })
 
 export default router
