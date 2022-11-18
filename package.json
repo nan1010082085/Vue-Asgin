@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.7.0",
-    "@vue/cli-service": "^3.7.0",
+    "@vue/cli-service": "^5.0.8",
     "babel-plugin-component": "^1.1.1",
     "cross-env": "^5.2.0",
     "less": "^3.0.4",
